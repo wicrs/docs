@@ -185,7 +185,6 @@ paths:
   '/user/{id}':
     post:
       description: Get the public information of another user
-      security: []
       parameters:
         - name: id
           in: path
@@ -283,7 +282,6 @@ paths:
   '/user/{userId}/account/{accountId}':
     get:
       description: Get the public information of a user's account
-      security: []
       parameters: 
         - name: userId
           in: path
@@ -325,7 +323,7 @@ paths:
           $ref: '#/components/responses/string_constraints'
         401:
           $ref: '#/components/responses/unauthorized_error'
-  '/hub/{id}/delete':
+  '/hub/delete{id}':
     delete:
       description: Delete a hub
       parameters:
@@ -348,7 +346,7 @@ paths:
           description: Account does not have access to a hub with that UUID
         401:
           $ref: '#/components/responses/unauthorized_error'
-  '/hub/{id}/rename':
+  '/hub/rename/{id}':
     put:
       description: Rename a hub
       parameters:
@@ -421,5 +419,84 @@ paths:
           description: Account does not have permission to create channels in that hub
         400:
           $ref: '#/components/responses/string_constraints'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+  '/channel/rename/{hubId}/{channelId}':
+    put: 
+      description: Create a new channel in a hub
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the hub the channel to be renamed is in
+        - name: channelId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the channel to be renamed
+        - name: new_name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: New name for the channel
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: UUID of an account that has permission to rename the channel
+      responses:
+        200:
+          description: Channel rename success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The channel's previous name
+        404:
+          description: Account does not have access to a hub with that UUID or the channel does not exist
+        403:
+          description: Account does not have permission to rename that channel
+        400:
+          $ref: '#/components/responses/string_constraints'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+  '/channel/delete/{hubId}/{channelId}':
+    delete: 
+      description: Delete a channel in a hub
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the hub the channel to be renamed is in
+        - name: channelId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: UUID of an account that has permission to delete the channel
+      responses:
+        200:
+          description: Channel deletion success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The name of the deleted channel
+        404:
+          description: Account does not have access to a hub with that UUID or the channel does not exist
+        403:
+          description: Account does not have permission to delete that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
