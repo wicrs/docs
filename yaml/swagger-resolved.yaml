@@ -1,0 +1,558 @@
+openapi: 3.0.0
+info:
+  title: WICRS API
+  description: The API for WICRS.
+  contact:
+    name: WICRS Repositories
+    url: https://github.com/wicrs
+    email: none@example.com
+  license:
+    name: GNU General Public License v3.0
+    url: https://github.com/wicrs/docs/blob/master/LICENSE
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/wicrs/wicrs/1.0.0
+  description: SwaggerHub API Auto Mocking
+security:
+- user_token_auth: []
+paths:
+  /user:
+    get:
+      description: Get the information of the authenticated user
+      responses:
+        "200":
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "403":
+          description: Not authenticated correctly
+  /user/{id}:
+    post:
+      description: Get the public information of another user
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A single user with personal information removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stripped_user'
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security: []
+  /user/account/create/{name}:
+    post:
+      description: Get the public information of another user
+      parameters:
+      - name: name
+        in: path
+        description: Username for the account being created
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A single account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /user/account/{id}/delete:
+    delete:
+      description: Delete one of the authenticated user's accounts
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the account to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Account deletion success
+        "404":
+          description: User does not have an account with that UUID
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /user/account/{id}/rename:
+    put:
+      description: Change the username of one of the authenticated user's accounts
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the account to rename
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: new_name
+        in: query
+        description: The new username for the account
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Account rename success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The previous name of the account
+                example: Test Account 1
+        "404":
+          description: User does not have an account with that UUID
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /user/account/{id}:
+    get:
+      description: Get the information of one of the currently authenticated user's
+        accounts
+      parameters:
+      - name: id
+        in: path
+        description: ID of the account
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A single user with personal information removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stripped_user'
+        "404":
+          description: No account with that ID
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /user/{userId}/account/{accountId}:
+    get:
+      description: Get the public information of a user's account
+      parameters:
+      - name: userId
+        in: path
+        description: ID of the user who owns the account being requested
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: ID of the account being requested
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A single user with personal information removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stripped_user'
+        "404":
+          description: User with that ID does not exist or they do not own an account
+            with that ID
+      security: []
+  /hub/create/{name}:
+    post:
+      description: Create a new hub owned by the authenticated user
+      parameters:
+      - name: accountId
+        in: query
+        description: UUID of the account that will have ownership of the hub
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name for the new hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Hub creation success
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /hub/{id}/delete:
+    delete:
+      description: Delete a hub
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the hub to be delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of the account that owns the hub
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Hub deletion success
+        "404":
+          description: Account does not have access to a hub with that UUID
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /hub/{id}/rename:
+    put:
+      description: Rename a hub
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the hub to be delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: new_name
+        in: query
+        description: The new name for the hub
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of the account that owns the hub
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Hub deletion success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The previous name of the hub
+                example: Test Hub 1
+        "404":
+          description: Account does not have access to a hub with that UUID
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /channel/create/{id}/{name}:
+    post:
+      description: Create a new channel in a hub
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the hub the channel should be created in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name of the channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to create channels in
+          the hub
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Channel creation success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The UUID of the new channel
+        "404":
+          description: Account does not have access to a hub with that UUID
+        "403":
+          description: Account does not have permission to create channels in that
+            hub
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: ID of the user, a hash of the email and if of the account they
+            used to login to their chosen OAuth2 service
+        oauth_service:
+          type: string
+          description: The name of the OAuth2 service the user used to sign up
+        created:
+          type: integer
+          description: Date the account was create, UTC millis
+        email:
+          type: string
+          description: The primary email of the account the user used for their chosen
+            OAuth2 service
+        accounts:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/account_map_item'
+          description: A list of the accounts the user owns
+      description: Represents a user of a WICRS server
+    account:
+      type: object
+      properties:
+        account_id:
+          type: string
+          description: UUID of the account
+        username:
+          type: string
+          description: Username of the account
+        created:
+          type: integer
+          description: Date the account was create, UTC millis
+        parent_id:
+          type: string
+          description: ID of the user that owns the account
+        is_bot:
+          type: boolean
+          description: Whether or not the account is dedicated to automated tasks/bot
+            work
+        in_hubs:
+          type: array
+          description: A list of the UUIDs of hubs the account is a member of
+          items:
+            type: string
+            description: The UUID of a hub
+    account_map_item:
+      type: object
+      properties:
+        id:
+          type: string
+        account:
+          $ref: '#/components/schemas/account'
+    stripped_user:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: ID of the user, a hash of the email and if of the account they
+            used to login to their chosen OAuth2 service
+        created:
+          type: integer
+          description: Date the account was create, UTC millis
+        accounts:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/stripped_account_map_item'
+          description: A list of the accounts the user owns
+      description: A user with some information removed/hidden to allow anyone to
+        recognise them without compromising their privacy
+    stripped_account:
+      type: object
+      properties:
+        account_id:
+          type: string
+          description: UUID of the account
+        username:
+          type: string
+          description: Username of the account
+        created:
+          type: integer
+          description: Date the account was create, UTC millis
+        parent_id:
+          type: string
+          description: ID of the user that owns the account
+        is_bot:
+          type: boolean
+          description: Whether or not the account is dedicated to automated tasks/bot
+            work
+        in_hubs:
+          type: array
+          description: A list of SHA256 hashes of the IDs of hubs the account is a
+            member of
+          items:
+            type: string
+            description: SHA256 hashe of the UUID of a hub
+      description: An account with some information removed/hidden to allow anyone
+        to view the account without compromising the holder's privacy
+    stripped_account_map_item:
+      type: object
+      properties:
+        id:
+          type: string
+        account:
+          $ref: '#/components/schemas/stripped_account'
+    inline_response_400:
+      type: object
+      properties:
+        allowed_chars:
+          type: string
+          description: Characters that are allowed to be used in the string
+          example: ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz-_.0123456789
+        max_chars:
+          type: integer
+          description: Maximum length of the string in characters
+          example: 32
+        min_chars:
+          type: integer
+          description: Minimum length of the string in characters
+          example: 1
+      description: String format information
+  responses:
+    unauthorized_error:
+      description: Authentication information is missing or invalid
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Authentication information is missing or invalid
+    user:
+      description: A single user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/user'
+    stripped_user:
+      description: A single user with personal information removed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/stripped_user'
+    account:
+      description: A single account
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/account'
+    stripped_account:
+      description: A single account with personal information removed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/stripped_account'
+    string_constraints:
+      description: Information on the constraints for a string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_400'
+  securitySchemes:
+    user_token_auth:
+      type: http
+      scheme: basic
