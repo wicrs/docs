@@ -53,7 +53,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
-      security: []
   /user/account/create/{name}:
     post:
       description: Get the public information of another user
@@ -213,7 +212,6 @@ paths:
         "404":
           description: User with that ID does not exist or they do not own an account
             with that ID
-      security: []
   /hub/create/{name}:
     post:
       description: Create a new hub owned by the authenticated user
@@ -250,7 +248,7 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /hub/{id}/delete:
+  /hub/delete{id}:
     delete:
       description: Delete a hub
       parameters:
@@ -282,7 +280,7 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /hub/{id}/rename:
+  /hub/rename/{id}:
     put:
       description: Rename a hub
       parameters:
@@ -382,6 +380,115 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /channel/rename/{hubId}/{channelId}:
+    put:
+      description: Create a new channel in a hub
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel to be renamed is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of the channel to be renamed
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: new_name
+        in: query
+        description: New name for the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to rename the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Channel rename success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The channel's previous name
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account does not have permission to rename that channel
+        "400":
+          description: Information on the constraints for a string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /channel/delete/{hubId}/{channelId}:
+    delete:
+      description: Delete a channel in a hub
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel to be renamed is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to delete the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Channel deletion success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The name of the deleted channel
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account does not have permission to delete that channel
         "401":
           description: Authentication information is missing or invalid
           content:
