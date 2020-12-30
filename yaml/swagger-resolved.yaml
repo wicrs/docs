@@ -69,7 +69,6 @@ paths:
   /user/account/create/{name}:
     post:
       tags:
-      - user
       - account
       description: Get the public information of another user
       parameters:
@@ -104,7 +103,6 @@ paths:
   /user/account/{id}/delete:
     delete:
       tags:
-      - user
       - account
       description: Delete one of the authenticated user's accounts
       parameters:
@@ -131,7 +129,6 @@ paths:
   /user/account/{id}/rename:
     put:
       tags:
-      - user
       - account
       description: Change the username of one of the authenticated user's accounts
       parameters:
@@ -178,7 +175,6 @@ paths:
   /user/account/{id}:
     get:
       tags:
-      - user
       - account
       description: Get the information of one of the currently authenticated user's
         accounts
@@ -211,7 +207,6 @@ paths:
     get:
       tags:
       - account
-      - user
       description: Get the public information of a user's account
       parameters:
       - name: userId
@@ -369,7 +364,6 @@ paths:
   /channel/create/{id}/{name}:
     post:
       tags:
-      - hub
       - channel
       description: Create a new channel in a hub
       parameters:
@@ -427,7 +421,6 @@ paths:
   /channel/rename/{hubId}/{channelId}:
     put:
       tags:
-      - hub
       - channel
       description: Create a new channel in a hub
       parameters:
@@ -492,7 +485,6 @@ paths:
   /channel/delete/{hubId}/{channelId}:
     delete:
       tags:
-      - hub
       - channel
       description: Delete a channel in a hub
       parameters:
@@ -539,12 +531,170 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+  /channel/{hubId}/{channelId}:
+    get:
+      tags:
+      - channel
+      description: Get channel metadata
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel to be renamed is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to view the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Channel deletion success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The name of the deleted channel
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account does not have permission to delete that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
 components:
   schemas:
+    permission_setting:
+      type: string
+      description: Current state of a permission for a user or a permission group
+      enum:
+      - "TRUE"
+      - "FALSE"
+      - NONE
+    channel_permission:
+      type: string
+      description: Permissions that apply only to channels
+      enum:
+      - All
+      - ViewChannel
+      - Configure
+      - SendMessage
+      - ReadMessage
+      - MuteUser
+    hub_permission:
+      type: string
+      description: Permissions that apply everywhere in a hub
+      enum:
+      - All
+      - ViewChannels
+      - ConfigureChannels
+      - Administrate
+      - CreateChannel
+      - DeleteChannel
+      - CreateCategory
+      - DeleteCategory
+      - ArrangeChannels
+      - SendMessage
+      - ReadMessage
+      - Invite
+      - Mute
+      - Unmute
+      - Kick
+      - Ban
+      - Unban
+      - AddBot
+    hub_permission_map:
+      type: array
+      description: Map of hub permissions and their set values
+      items:
+        $ref: '#/components/schemas/hub_permission_map_item'
+    channel_permission_map:
+      type: array
+      description: Map of channel UUIDs to channel permissions and their set values
+      items:
+        $ref: '#/components/schemas/channel_permission_map_inner'
+    channel_permission_map_item:
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/channel_permission'
+        setting:
+          $ref: '#/components/schemas/permission_setting'
+      description: Channel permission and it's current setting
+    hub_permission_map_item:
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/hub_permission'
+        setting:
+          $ref: '#/components/schemas/permission_setting'
+      description: Hub permission and it's current setting
+    date:
+      type: integer
+      description: Time in milliseconds from 1 Jan 1970
+    hub:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID of the hub
+        created:
+          $ref: '#/components/schemas/date'
+        name:
+          type: string
+          description: Name of the channel
+      description: Represents a channel in a WICRS server
+    permission_group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID of the hub the group is in
+        created:
+          $ref: '#/components/schemas/date'
+        hub_permissions:
+          $ref: '#/components/schemas/hub_permission_map'
+        channel_permissions:
+          $ref: '#/components/schemas/channel_permission_map'
+      description: Represents a group of permissions that can be given to any member
+        of a hub the hub the group is in
+    channel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID of the channel
+        created:
+          $ref: '#/components/schemas/date'
+        name:
+          type: string
+          description: Name of the channel
+        hub_id:
+          type: string
+          description: UUID of the hub the channel is in
+      description: Represents a channel in a WICRS server
     user:
       type: object
       properties:
-        user_id:
+        id:
           type: string
           description: ID of the user, a hash of the email and if of the account they
             used to login to their chosen OAuth2 service
@@ -552,8 +702,7 @@ components:
           type: string
           description: The name of the OAuth2 service the user used to sign up
         created:
-          type: integer
-          description: Date the account was create, UTC millis
+          $ref: '#/components/schemas/date'
         email:
           type: string
           description: The primary email of the account the user used for their chosen
@@ -563,19 +712,18 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/account_map_item'
           description: A list of the accounts the user owns
-      description: Represents a user of a WICRS server
+      description: Represents a user of WICRS
     account:
       type: object
       properties:
-        account_id:
+        id:
           type: string
           description: UUID of the account
         username:
           type: string
           description: Username of the account
         created:
-          type: integer
-          description: Date the account was create, UTC millis
+          $ref: '#/components/schemas/date'
         parent_id:
           type: string
           description: ID of the user that owns the account
@@ -604,8 +752,7 @@ components:
           description: ID of the user, a hash of the email and if of the account they
             used to login to their chosen OAuth2 service
         created:
-          type: integer
-          description: Date the account was create, UTC millis
+          $ref: '#/components/schemas/date'
         accounts:
           type: object
           additionalProperties:
@@ -623,8 +770,7 @@ components:
           type: string
           description: Username of the account
         created:
-          type: integer
-          description: Date the account was create, UTC millis
+          $ref: '#/components/schemas/date'
         parent_id:
           type: string
           description: ID of the user that owns the account
@@ -664,6 +810,15 @@ components:
           description: Minimum length of the string in characters
           example: 1
       description: String format information
+    channel_permission_map_inner:
+      type: object
+      properties:
+        channel_id:
+          $ref: '#/components/schemas/channel_permission'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/channel_permission_map_item'
   responses:
     unauthorized_error:
       description: Authentication information is missing or invalid
