@@ -622,15 +622,22 @@ components:
       - Unban
       - AddBot
     hub_permission_map:
-      type: array
-      description: Map of hub permissions and their set values
-      items:
+      type: object
+      additionalProperties:
         $ref: '#/components/schemas/hub_permission_map_item'
+      description: Map of hub permissions and their set values
     channel_permission_map:
-      type: array
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          channel_id:
+            $ref: '#/components/schemas/channel_permission'
+          permissions:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/channel_permission_map_item'
       description: Map of channel UUIDs to channel permissions and their set values
-      items:
-        $ref: '#/components/schemas/channel_permission_map_inner'
     channel_permission_map_item:
       type: object
       properties:
@@ -810,15 +817,6 @@ components:
           description: Minimum length of the string in characters
           example: 1
       description: String format information
-    channel_permission_map_inner:
-      type: object
-      properties:
-        channel_id:
-          $ref: '#/components/schemas/channel_permission'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/channel_permission_map_item'
   responses:
     unauthorized_error:
       description: Authentication information is missing or invalid
