@@ -72,19 +72,106 @@ components:
                 description: Minimum length of the string in characters
                 example: 1
   schemas:
-    user:
-      description: Represents a user of a WICRS server
+    permission_setting:
+      description: Current state of a permission for a user or a permission group
+      type: string
+      enum: ["TRUE", "FALSE", "NONE"]
+    channel_permission:
+      description: Permissions that apply only to channels
+      type: string
+      enum: [All, ViewChannel, Configure, SendMessage, ReadMessage, MuteUser]
+    hub_permission:
+      description: Permissions that apply everywhere in a hub
+      type: string
+      enum: [All, ViewChannels, ConfigureChannels, Administrate, CreateChannel, DeleteChannel, CreateCategory, DeleteCategory, ArrangeChannels, SendMessage, ReadMessage, Invite, Mute, Unmute, Kick, Ban, Unban, AddBot]
+    hub_permission_map:
+      description: Map of hub permissions and their set values
+      type: array
+      items:
+        $ref: '#/components/schemas/hub_permission_map_item'
+    channel_permission_map:
+      description: Map of channel UUIDs to channel permissions and their set values
+      type: array
+      items:
+        type: object
+        properties:
+          channel_id:
+            $ref: '#/components/schemas/channel_permission'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/channel_permission_map_item'
+    channel_permission_map_item:
+      description: Channel permission and it's current setting
       type: object
       properties:
-        user_id:
+        permission:
+          $ref: '#/components/schemas/channel_permission'
+        setting:
+          $ref: '#/components/schemas/permission_setting'
+    hub_permission_map_item:
+      description: Hub permission and it's current setting
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/hub_permission'
+        setting:
+          $ref: '#/components/schemas/permission_setting'
+    date:
+      description: Time in milliseconds from 1 Jan 1970
+      type: integer
+    hub:
+      description: Represents a channel in a WICRS server
+      type: object
+      properties:
+        id:
+          description: UUID of the hub
+          type: string
+        created:
+          $ref: '#/components/schemas/date'
+        name:
+          description: Name of the channel
+          type: string
+    permission_group:
+      description: Represents a group of permissions that can be given to any member of a hub the hub the group is in
+      type: object
+      properties:
+        id:
+          description: UUID of the hub the group is in
+          type: string
+        created:
+          $ref: '#/components/schemas/date'
+        hub_permissions:
+          $ref: '#/components/schemas/hub_permission_map'
+        channel_permissions:
+          $ref: '#/components/schemas/channel_permission_map'
+    channel:
+      description: Represents a channel in a WICRS server
+      type: object
+      properties:
+        id:
+          description: UUID of the channel
+          type: string
+        created:
+          $ref: '#/components/schemas/date'
+        name:
+          description: Name of the channel
+          type: string
+        hub_id:
+          description: UUID of the hub the channel is in
+          type: string
+    user:
+      description: Represents a user of WICRS
+      type: object
+      properties:
+        id:
           description: ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service
           type: string
         oauth_service:
           description: The name of the OAuth2 service the user used to sign up
           type: string
         created:
-          description: Date the account was create, UTC millis
-          type: integer
+          $ref: '#/components/schemas/date'
         email:
           description: The primary email of the account the user used for their chosen OAuth2 service
           type: string
@@ -96,15 +183,14 @@ components:
     account:
       type: object
       properties:
-        account_id:
+        id:
           description: UUID of the account
           type: string
         username:
           description: Username of the account
           type: string
         created:
-          description: Date the account was create, UTC millis
-          type: integer
+          $ref: '#/components/schemas/date'
         parent_id:
           description: ID of the user that owns the account
           type: string
@@ -132,8 +218,7 @@ components:
           description: ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service
           type: string
         created:
-          description: Date the account was create, UTC millis
-          type: integer
+          $ref: '#/components/schemas/date'
         accounts:
           description: A list of the accounts the user owns
           type: object
@@ -150,8 +235,7 @@ components:
           description: Username of the account
           type: string
         created:
-          description: Date the account was create, UTC millis
-          type: integer
+          $ref: '#/components/schemas/date'
         parent_id:
           description: ID of the user that owns the account
           type: string
@@ -219,7 +303,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - user
         - account
   '/user/account/{id}/delete':
     delete:
@@ -239,7 +322,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - user
         - account
   '/user/account/{id}/rename':
     put:
@@ -273,7 +355,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - user
         - account
   '/user/account/{id}':
     get:
@@ -293,7 +374,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - user
         - account
   '/user/{userId}/account/{accountId}':
     get:
@@ -318,7 +398,6 @@ paths:
           description: User with that ID does not exist or they do not own an account with that ID
       tags:
         - account
-        - user
   '/hub/create/{name}':
     post:
       description: Create a new hub owned by the authenticated user
@@ -447,7 +526,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub
         - channel
   '/channel/rename/{hubId}/{channelId}':
     put: 
@@ -494,7 +572,6 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub
         - channel
   '/channel/delete/{hubId}/{channelId}':
     delete: 
@@ -532,7 +609,43 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub
+        - channel
+  '/channel/{hubId}/{channelId}':
+    get: 
+      description: Get channel metadata
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the hub the channel to be renamed is in
+        - name: channelId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: UUID of an account that has permission to view the channel
+      responses:
+        200:
+          description: Channel deletion success
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The name of the deleted channel
+        404:
+          description: Account does not have access to a hub with that UUID or the channel does not exist
+        403:
+          description: Account does not have permission to delete that channel
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
         - channel
 tags:
   - description: Operations performed on users
