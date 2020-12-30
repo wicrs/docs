@@ -820,18 +820,29 @@
         "enum" : [ "All", "ViewChannels", "ConfigureChannels", "Administrate", "CreateChannel", "DeleteChannel", "CreateCategory", "DeleteCategory", "ArrangeChannels", "SendMessage", "ReadMessage", "Invite", "Mute", "Unmute", "Kick", "Ban", "Unban", "AddBot" ]
       },
       "hub_permission_map" : {
-        "type" : "array",
-        "description" : "Map of hub permissions and their set values",
-        "items" : {
+        "type" : "object",
+        "additionalProperties" : {
           "$ref" : "#/components/schemas/hub_permission_map_item"
-        }
+        },
+        "description" : "Map of hub permissions and their set values"
       },
       "channel_permission_map" : {
-        "type" : "array",
-        "description" : "Map of channel UUIDs to channel permissions and their set values",
-        "items" : {
-          "$ref" : "#/components/schemas/channel_permission_map_inner"
-        }
+        "type" : "object",
+        "additionalProperties" : {
+          "type" : "object",
+          "properties" : {
+            "channel_id" : {
+              "$ref" : "#/components/schemas/channel_permission"
+            },
+            "permissions" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "$ref" : "#/components/schemas/channel_permission_map_item"
+              }
+            }
+          }
+        },
+        "description" : "Map of channel UUIDs to channel permissions and their set values"
       },
       "channel_permission_map_item" : {
         "type" : "object",
@@ -1073,20 +1084,6 @@
           }
         },
         "description" : "String format information"
-      },
-      "channel_permission_map_inner" : {
-        "type" : "object",
-        "properties" : {
-          "channel_id" : {
-            "$ref" : "#/components/schemas/channel_permission"
-          },
-          "permissions" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/channel_permission_map_item"
-            }
-          }
-        }
       }
     },
     "responses" : {
