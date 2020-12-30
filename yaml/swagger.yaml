@@ -86,20 +86,20 @@ components:
       enum: [All, ViewChannels, ConfigureChannels, Administrate, CreateChannel, DeleteChannel, CreateCategory, DeleteCategory, ArrangeChannels, SendMessage, ReadMessage, Invite, Mute, Unmute, Kick, Ban, Unban, AddBot]
     hub_permission_map:
       description: Map of hub permissions and their set values
-      type: array
-      items:
+      type: object
+      additionalProperties:
         $ref: '#/components/schemas/hub_permission_map_item'
     channel_permission_map:
       description: Map of channel UUIDs to channel permissions and their set values
-      type: array
-      items:
+      type: object
+      additionalProperties:
         type: object
         properties:
           channel_id:
             $ref: '#/components/schemas/channel_permission'
           permissions:
-            type: array
-            items:
+            type: object
+            additionalProperties:
               $ref: '#/components/schemas/channel_permission_map_item'
     channel_permission_map_item:
       description: Channel permission and it's current setting
