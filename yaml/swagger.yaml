@@ -309,6 +309,7 @@ paths:
   /user:
     get:
       description: Get the information of the authenticated user
+      operationId: userGetAuth
       responses:
         200:
           $ref: '#/components/responses/user'
@@ -319,6 +320,7 @@ paths:
   '/user/{id}':
     post:
       description: Get the public information of another user
+      operationId: userGet
       parameters:
         - name: id
           in: path
@@ -336,6 +338,7 @@ paths:
   '/user/account/create/{name}':
     post:
       description: Get the public information of another user
+      operationId: userAccountCreate
       parameters:
         - name: name
           in: path
@@ -355,6 +358,7 @@ paths:
   '/user/account/{id}/delete':
     delete:
       description: Delete one of the authenticated user's accounts
+      operationId: userAccountDelete
       parameters:
         - name: id
           in: path
@@ -374,6 +378,7 @@ paths:
   '/user/account/{id}/rename':
     put:
       description: Change the username of one of the authenticated user's accounts
+      operationId: userAccountRename
       parameters:
         - name: id
           in: path
@@ -407,6 +412,7 @@ paths:
   '/user/account/{id}':
     get:
       description: Get the information of one of the currently authenticated user's accounts
+      operationId: userAccountGetAuth
       parameters: 
         - name: id
           in: path
@@ -426,6 +432,7 @@ paths:
   '/user/{userId}/account/{accountId}':
     get:
       description: Get the public information of a user's account
+      operationId: userAccountGet
       parameters: 
         - name: userId
           in: path
@@ -449,6 +456,7 @@ paths:
   '/hub/create/{name}':
     post:
       description: Create a new hub owned by the authenticated user
+      operationId: hubCreate
       parameters:
         - name: accountId
           in: query
@@ -474,6 +482,7 @@ paths:
   '/hub/{id}':
     get:
       description: Get a hub
+      operationId: hubGet
       parameters:
         - name: id
           in: path
@@ -503,6 +512,7 @@ paths:
   '/hub/delete/{id}':
     delete:
       description: Delete a hub
+      operationId: hubDelete
       parameters:
         - name: id
           in: path
@@ -528,6 +538,7 @@ paths:
   '/hub/rename/{id}':
     put:
       description: Rename a hub
+      operationId: hubRename
       parameters:
         - name: id
           in: path
@@ -567,6 +578,7 @@ paths:
   '/channel/create/{id}/{name}':
     post: 
       description: Create a new channel in a hub
+      operationId: hubChannelCreate
       parameters:
         - name: id
           in: path
@@ -607,6 +619,7 @@ paths:
   '/channel/rename/{hubId}/{channelId}':
     put: 
       description: Create a new channel in a hub
+      operationId: hubChannelRename
       parameters:
         - name: hubId
           in: path
@@ -653,6 +666,7 @@ paths:
   '/channel/delete/{hubId}/{channelId}':
     delete: 
       description: Delete a channel in a hub
+      operationId: hubChannelDelete
       parameters:
         - name: hubId
           in: path
@@ -690,6 +704,7 @@ paths:
   '/channel/{hubId}/{channelId}':
     get: 
       description: Get channel metadata
+      operationId: hubChannelGet
       parameters:
         - name: hubId
           in: path
