@@ -666,6 +666,9 @@ components:
     channel_permission_map:
       type: object
       additionalProperties:
+        required:
+        - channel_id
+        - permissions
         type: object
         properties:
           channel_id:
@@ -674,6 +677,9 @@ components:
             $ref: '#/components/schemas/channel_permission_map_item'
       description: Map of channel UUIDs to channel permissions and their set values
     channel_permission_map_item:
+      required:
+      - permission
+      - setting
       type: object
       properties:
         permission:
@@ -682,6 +688,9 @@ components:
           $ref: '#/components/schemas/permission_setting'
       description: Channel permission and it's current setting
     hub_permission_map_item:
+      required:
+      - permission
+      - setting
       type: object
       properties:
         permission:
@@ -693,6 +702,14 @@ components:
       type: integer
       description: Time in milliseconds from 1 Jan 1970
     hub_member:
+      required:
+      - account
+      - channel_permissions
+      - groups
+      - hub
+      - hub_permissions
+      - joined
+      - nickname
       type: object
       properties:
         account:
@@ -715,6 +732,16 @@ components:
         channel_permissions:
           $ref: '#/components/schemas/channel_permission_map'
     hub:
+      required:
+      - bans
+      - channels
+      - created
+      - default_group
+      - groups
+      - id
+      - members
+      - name
+      - owner
       type: object
       properties:
         id:
@@ -751,8 +778,13 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/hub_channels'
           description: Channels in the hub
-      description: Represents a channel in a WICRS server
+      description: Represents a hub in a WICRS server
     permission_group:
+      required:
+      - channel_permissions
+      - created
+      - hub_permissions
+      - id
       type: object
       properties:
         id:
@@ -767,6 +799,11 @@ components:
       description: Represents a group of permissions that can be given to any member
         of a hub the hub the group is in
     channel:
+      required:
+      - created
+      - hub_id
+      - id
+      - name
       type: object
       properties:
         id:
@@ -782,6 +819,12 @@ components:
           description: UUID of the hub the channel is in
       description: Represents a channel in a WICRS server
     user:
+      required:
+      - accounts
+      - created
+      - email
+      - id
+      - oauth_service
       type: object
       properties:
         id:
@@ -804,6 +847,13 @@ components:
           description: A list of the accounts the user owns
       description: Represents a user of WICRS
     account:
+      required:
+      - created
+      - id
+      - in_hubs
+      - is_bot
+      - parent_id
+      - username
       type: object
       properties:
         id:
@@ -828,6 +878,9 @@ components:
             type: string
             description: The UUID of a hub
     account_map_item:
+      required:
+      - account
+      - id
       type: object
       properties:
         id:
@@ -835,9 +888,13 @@ components:
         account:
           $ref: '#/components/schemas/account'
     stripped_user:
+      required:
+      - accounts
+      - created
+      - id
       type: object
       properties:
-        user_id:
+        id:
           type: string
           description: ID of the user, a hash of the email and if of the account they
             used to login to their chosen OAuth2 service
@@ -846,45 +903,15 @@ components:
         accounts:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/stripped_account_map_item'
+            $ref: '#/components/schemas/account_map_item'
           description: A list of the accounts the user owns
       description: A user with some information removed/hidden to allow anyone to
         recognise them without compromising their privacy
-    stripped_account:
-      type: object
-      properties:
-        account_id:
-          type: string
-          description: UUID of the account
-        username:
-          type: string
-          description: Username of the account
-        created:
-          $ref: '#/components/schemas/date'
-        parent_id:
-          type: string
-          description: ID of the user that owns the account
-        is_bot:
-          type: boolean
-          description: Whether or not the account is dedicated to automated tasks/bot
-            work
-        in_hubs:
-          type: array
-          description: A list of SHA256 hashes of the IDs of hubs the account is a
-            member of
-          items:
-            type: string
-            description: SHA256 hashe of the UUID of a hub
-      description: An account with some information removed/hidden to allow anyone
-        to view the account without compromising the holder's privacy
-    stripped_account_map_item:
-      type: object
-      properties:
-        id:
-          type: string
-        account:
-          $ref: '#/components/schemas/stripped_account'
     inline_response_400:
+      required:
+      - allowed_chars
+      - max_chars
+      - min_chars
       type: object
       properties:
         allowed_chars:
@@ -908,6 +935,9 @@ components:
         group:
           $ref: '#/components/schemas/hub_member'
     hub_groups:
+      required:
+      - group
+      - id
       type: object
       properties:
         id:
@@ -915,11 +945,14 @@ components:
         group:
           $ref: '#/components/schemas/permission_group'
     hub_channels:
+      required:
+      - channel
+      - id
       type: object
       properties:
         id:
           description: UUID of the channel
-        group:
+        channel:
           $ref: '#/components/schemas/channel'
   responses:
     unauthorized_error:
@@ -948,11 +981,11 @@ components:
           schema:
             $ref: '#/components/schemas/account'
     stripped_account:
-      description: A single account with personal information removed
+      description: A single account with the IDs of hubs replaced with hashes
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/stripped_account'
+            $ref: '#/components/schemas/account'
     string_constraints:
       description: Information on the constraints for a string
       content:
