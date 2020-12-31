@@ -200,8 +200,8 @@
   <ul>
   <li><a href="#userAccountCreate"><code><span class="http-method">post</span> /user/account/create/{name}</code></a></li>
   <li><a href="#userAccountDelete"><code><span class="http-method">delete</span> /user/account/{id}/delete</code></a></li>
-  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></a></li>
-  <li><a href="#userAccountGetAuth"><code><span class="http-method">get</span> /user/account/{id}</code></a></li>
+  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/account/{id}</code></a></li>
+  <li><a href="#userAccountGetOther"><code><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></a></li>
   <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{id}/rename</code></a></li>
   </ul>
   <h4><a href="#Channel">Channel</a></h4>
@@ -218,10 +218,18 @@
   <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{id}</code></a></li>
   <li><a href="#hubRename"><code><span class="http-method">put</span> /hub/rename/{id}</code></a></li>
   </ul>
+  <h4><a href="#Message">Message</a></h4>
+  <ul>
+  <li><a href="#hubChannelDeleteMessage"><code><span class="http-method">delete</span> /channel/{hubId}/{channelId}/message</code></a></li>
+  <li><a href="#hubChannelEditMessage"><code><span class="http-method">put</span> /channel/{hubId}/{channelId}/message</code></a></li>
+  <li><a href="#hubChannelGetMessage"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}/message</code></a></li>
+  <li><a href="#hubChannelSendMessage"><code><span class="http-method">post</span> /channel/{hubId}/{channelId}/message</code></a></li>
+  </ul>
   <h4><a href="#User">User</a></h4>
   <ul>
-  <li><a href="#userGet"><code><span class="http-method">post</span> /user/{id}</code></a></li>
-  <li><a href="#userGetAuth"><code><span class="http-method">get</span> /user</code></a></li>
+  <li><a href="#userDelete"><code><span class="http-method">delete</span> /user</code></a></li>
+  <li><a href="#userGet"><code><span class="http-method">get</span> /user</code></a></li>
+  <li><a href="#userGetOther"><code><span class="http-method">get</span> /user/{id}</code></a></li>
   </ul>
 
   <h1><a name="Account">Account</a></h1>
@@ -325,71 +333,8 @@
   <div class="method"><a name="userAccountGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountGet</span>)</div>
-    <div class="method-notes">Get the public information of a user&#x27;s account</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">userId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account being requested </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#stripped_user">stripped_user</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "created" : 0,
-  "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  }
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single user with personal information removed
-        <a href="#stripped_user">stripped_user</a>
-    <h4 class="field-label">404</h4>
-    User with that ID does not exist or they do not own an account with that ID
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userAccountGetAuth"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /user/account/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountGetAuth</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userAccountGet</span>)</div>
     <div class="method-notes">Get the information of one of the currently authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -448,6 +393,69 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userAccountGetOther"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">userAccountGetOther</span>)</div>
+    <div class="method-notes">Get the public information of a user&#x27;s account</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account being requested </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#stripped_user">stripped_user</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "created" : 0,
+  "id" : "id",
+  "accounts" : {
+    "key" : {
+      "id" : "id",
+      "account" : {
+        "parent_id" : "parent_id",
+        "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
+        "is_bot" : true,
+        "username" : "username"
+      }
+    }
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A single user with personal information removed
+        <a href="#stripped_user">stripped_user</a>
+    <h4 class="field-label">404</h4>
+    User with that ID does not exist or they do not own an account with that ID
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="userAccountRename"></a>
@@ -682,13 +690,10 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Channel info
+    Channel get success
         <a href="#channel">channel</a>
     <h4 class="field-label">404</h4>
     Account does not have access to a hub with that UUID or the channel does not exist
-        <a href="#"></a>
-    <h4 class="field-label">403</h4>
-    Account does not have permission to delete that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1019,12 +1024,387 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="Message">Message</a></h1>
+  <div class="method"><a name="hubChannelDeleteMessage"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelDeleteMessage</span>)</div>
+    <div class="method-notes">Delete a message from a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel the message is in </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID the channel the message is in </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to delete messages in the channel </div>      <div class="param">messageId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to delete </div>    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Deletion success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel does not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to delete messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubChannelEditMessage"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelEditMessage</span>)</div>
+    <div class="method-notes">Edit a message in a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel that the message to be edited is in </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the channel the message is in </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the account that sent the message </div>      <div class="param">messageId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to edit </div>      <div class="param">newContent (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New contents of the message </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#message">message</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Edit success
+        <a href="#message">message</a>
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel does not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account did not send that message in the channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubChannelGetMessage"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelGetMessage</span>)</div>
+    <div class="method-notes">Get a message from a channel by it&#x27;s ID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel that the message is in </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to view the channel </div>      <div class="param">messageId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to get </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#message">message</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Message get success
+        <a href="#message">message</a>
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel does not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to read messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubChannelSendMessage"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelSendMessage</span>)</div>
+    <div class="method-notes">Send a message in a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel the message is to be sent is in </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the channel the message is to be sent in </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to send messages in the channel </div>      <div class="param">message (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Contents of the message </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Message sent successfully
+        <a href="#String">String</a>
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel does not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to send messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
   <h1><a name="User">User</a></h1>
+  <div class="method"><a name="userDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">userDelete</span>)</div>
+    <div class="method-notes">Get the information of the authenticated user</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#user">user</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
+  "created" : 0,
+  "id" : "id",
+  "accounts" : {
+    "key" : {
+      "id" : "id",
+      "account" : {
+        "parent_id" : "parent_id",
+        "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
+        "is_bot" : true,
+        "username" : "username"
+      }
+    }
+  },
+  "email" : "email"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A single user
+        <a href="#user">user</a>
+    <h4 class="field-label">403</h4>
+    Not authenticated correctly
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="userGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /user/{id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user</code></pre></div>
     <div class="method-summary"> (<span class="nickname">userGet</span>)</div>
+    <div class="method-notes">Get the information of the authenticated user</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#user">user</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
+  "created" : 0,
+  "id" : "id",
+  "accounts" : {
+    "key" : {
+      "id" : "id",
+      "account" : {
+        "parent_id" : "parent_id",
+        "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
+        "is_bot" : true,
+        "username" : "username"
+      }
+    }
+  },
+  "email" : "email"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A single user
+        <a href="#user">user</a>
+    <h4 class="field-label">403</h4>
+    Not authenticated correctly
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userGetOther"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">userGetOther</span>)</div>
     <div class="method-notes">Get the public information of another user</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -1081,64 +1461,6 @@
         <a href="#inline_response_400">inline_response_400</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="userGetAuth"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userGetAuth</span>)</div>
-    <div class="method-notes">Get the information of the authenticated user</div>
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#user">user</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
-  "created" : 0,
-  "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single user
-        <a href="#user">user</a>
-    <h4 class="field-label">403</h4>
-    Not authenticated correctly
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
 
   <h2><a name="__Models">Models</a></h2>
   [ Jump to <a href="#__Methods">Methods</a> ]
@@ -1161,6 +1483,8 @@
     <li><a href="#hub_permission_map"><code>hub_permission_map</code></a></li>
     <li><a href="#hub_permission_map_item"><code>hub_permission_map_item</code></a></li>
     <li><a href="#inline_response_400"><code>inline_response_400</code></a></li>
+    <li><a href="#message"><code>message</code></a></li>
+    <li><a href="#message_edited"><code>message_edited</code></a></li>
     <li><a href="#permission_group"><code>permission_group</code></a></li>
     <li><a href="#permission_setting"><code>permission_setting</code></a></li>
     <li><a href="#stripped_user"><code>stripped_user</code></a></li>
@@ -1305,6 +1629,25 @@
           <div class="param-desc"><span class="param-type">example: 32</span></div>
 <div class="param">min_chars </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minimum length of the string in characters </div>
           <div class="param-desc"><span class="param-type">example: 1</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="message"><code>message</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Message sent in a text channel</div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the message </div>
+<div class="param">sent </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">sender </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that sent the message </div>
+<div class="param">content </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Content of the sent message </div>
+<div class="param">edited (optional)</div><div class="param-desc"><span class="param-type"><a href="#message_edited">message_edited</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="message_edited"><code>message_edited</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Times the message was edited</div>
+    <div class="field-items">
+      <div class="param">times (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> How many times the message was edited </div>
+<div class="param">dates (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">array[date]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
