@@ -199,14 +199,14 @@
   <h4><a href="#Account">Account</a></h4>
   <ul>
   <li><a href="#userAccountCreate"><code><span class="http-method">post</span> /user/account/create/{name}</code></a></li>
-  <li><a href="#userAccountDelete"><code><span class="http-method">delete</span> /user/account/{id}/delete</code></a></li>
-  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/account/{id}</code></a></li>
+  <li><a href="#userAccountDelete"><code><span class="http-method">delete</span> /user/account/{accountId}/delete</code></a></li>
+  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/account/{accountId}</code></a></li>
   <li><a href="#userAccountGetOther"><code><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></a></li>
-  <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{id}/rename</code></a></li>
+  <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{accountId}/rename</code></a></li>
   </ul>
   <h4><a href="#Channel">Channel</a></h4>
   <ul>
-  <li><a href="#hubChannelCreate"><code><span class="http-method">post</span> /channel/create/{id}/{name}</code></a></li>
+  <li><a href="#hubChannelCreate"><code><span class="http-method">post</span> /channel/create/{hubId}/{name}</code></a></li>
   <li><a href="#hubChannelDelete"><code><span class="http-method">delete</span> /channel/delete/{hubId}/{channelId}</code></a></li>
   <li><a href="#hubChannelGet"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}</code></a></li>
   <li><a href="#hubChannelRename"><code><span class="http-method">put</span> /channel/rename/{hubId}/{channelId}</code></a></li>
@@ -214,16 +214,19 @@
   <h4><a href="#Hub">Hub</a></h4>
   <ul>
   <li><a href="#hubCreate"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
-  <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/delete/{id}</code></a></li>
-  <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{id}</code></a></li>
-  <li><a href="#hubRename"><code><span class="http-method">put</span> /hub/rename/{id}</code></a></li>
+  <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/delete/{hubId}</code></a></li>
+  <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{hubId}</code></a></li>
+  <li><a href="#hubRename"><code><span class="http-method">put</span> /hub/rename/{hubId}</code></a></li>
   </ul>
   <h4><a href="#Message">Message</a></h4>
   <ul>
-  <li><a href="#hubChannelDeleteMessage"><code><span class="http-method">delete</span> /channel/{hubId}/{channelId}/message</code></a></li>
-  <li><a href="#hubChannelEditMessage"><code><span class="http-method">put</span> /channel/{hubId}/{channelId}/message</code></a></li>
-  <li><a href="#hubChannelGetMessage"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}/message</code></a></li>
-  <li><a href="#hubChannelSendMessage"><code><span class="http-method">post</span> /channel/{hubId}/{channelId}/message</code></a></li>
+  <li><a href="#hubChannelDeleteMessage"><code><span class="http-method">delete</span> /message/{hubId}/{channelId}/{messageId}</code></a></li>
+  <li><a href="#hubChannelDeleteMessages"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}/delete_all_of</code></a></li>
+  <li><a href="#hubChannelEditMessage"><code><span class="http-method">put</span> /message/{hubId}/{channelId}/{messageId}</code></a></li>
+  <li><a href="#hubChannelGetLastNMessages"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}/last_messages</code></a></li>
+  <li><a href="#hubChannelGetMessage"><code><span class="http-method">get</span> /message/{hubId}/{channelId}/{messageId}</code></a></li>
+  <li><a href="#hubChannelSearchMessages"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}/search_for/{term}</code></a></li>
+  <li><a href="#hubChannelSendMessage"><code><span class="http-method">post</span> /channel/{hubId}/{channelId}/send_message</code></a></li>
   </ul>
   <h4><a href="#User">User</a></h4>
   <ul>
@@ -292,15 +295,15 @@
   <div class="method"><a name="userAccountDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user/account/{id}/delete</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user/account/{accountId}/delete</code></pre></div>
     <div class="method-summary"> (<span class="nickname">userAccountDelete</span>)</div>
     <div class="method-notes">Delete one of the authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to delete </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -333,15 +336,15 @@
   <div class="method"><a name="userAccountGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/account/{id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/account/{accountId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">userAccountGet</span>)</div>
     <div class="method-notes">Get the information of one of the currently authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -408,7 +411,7 @@
       
             <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account being requested </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -461,15 +464,15 @@
   <div class="method"><a name="userAccountRename"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="put"><code class="huge"><span class="http-method">put</span> /user/account/{id}/rename</code></pre></div>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /user/account/{accountId}/rename</code></pre></div>
     <div class="method-summary"> (<span class="nickname">userAccountRename</span>)</div>
     <div class="method-notes">Change the username of one of the authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to rename </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -520,26 +523,23 @@
   <div class="method"><a name="hubChannelCreate"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/create/{id}/{name}</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/create/{hubId}/{name}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubChannelCreate</span>)</div>
     <div class="method-notes">Create a new channel in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel should be created in </div>      <div class="param">name (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the channel </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the channel </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to create channels in the hub </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -591,18 +591,15 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel to be renamed is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to delete the channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -650,18 +647,15 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel to be renamed is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to view the channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -711,9 +705,11 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel to be renamed is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the channel to be renamed </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -722,9 +718,7 @@
     <div class="field-items">
       <div class="param">new_name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to rename the channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -775,18 +769,15 @@
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">name (required)</div>
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">name (required)</div>
       
             <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name for the new hub </div>    </div>  <!-- field-items -->
 
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the account that will have ownership of the hub </div>    </div>  <!-- field-items -->
 
 
 
@@ -816,24 +807,21 @@
   <div class="method"><a name="hubDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete/{id}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete/{hubId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubDelete</span>)</div>
     <div class="method-notes">Delete a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub to be delete </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the account that owns the hub </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
 
@@ -862,24 +850,21 @@
   <div class="method"><a name="hubGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{hubId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubGet</span>)</div>
     <div class="method-notes">Get a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub to be delete </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that is a member of the hub </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -967,15 +952,17 @@
   <div class="method"><a name="hubRename"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="put"><code class="huge"><span class="http-method">put</span> /hub/rename/{id}</code></pre></div>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /hub/rename/{hubId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubRename</span>)</div>
     <div class="method-notes">Rename a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">id (required)</div>
+      <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub to be delete </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -984,9 +971,7 @@
     <div class="field-items">
       <div class="param">new_name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the account that owns the hub </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1028,7 +1013,7 @@
   <div class="method"><a name="hubChannelDeleteMessage"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /message/{hubId}/{channelId}/{messageId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubChannelDeleteMessage</span>)</div>
     <div class="method-notes">Delete a message from a channel</div>
 
@@ -1036,20 +1021,17 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel the message is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID the channel the message is in </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to delete messages in the channel </div>      <div class="param">messageId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">messageId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to delete </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a message in the channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
 
@@ -1068,7 +1050,7 @@
     Deletion success
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Account does not have access to a hub with that UUID or the channel does not exist
+    Account does not have access to a hub with that UUID or the channel or they do not exist
         <a href="#"></a>
     <h4 class="field-label">403</h4>
     Account does not have permission to delete messages in that channel
@@ -1078,10 +1060,90 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="hubChannelDeleteMessages"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}/delete_all_of</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelDeleteMessages</span>)</div>
+    <div class="method-notes">Search for messages in the a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">messages (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Array of the UUIDs of messages to delete </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#message">message</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+}, {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Got messages successfully
+        
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel or they do not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to view messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="hubChannelEditMessage"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="put"><code class="huge"><span class="http-method">put</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /message/{hubId}/{channelId}/{messageId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubChannelEditMessage</span>)</div>
     <div class="method-notes">Edit a message in a channel</div>
 
@@ -1089,20 +1151,20 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel that the message to be edited is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the channel the message is in </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">messageId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a message in the channel </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the account that sent the message </div>      <div class="param">messageId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to edit </div>      <div class="param">newContent (required)</div>
+      <div class="param">newContent (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New contents of the message </div>    </div>  <!-- field-items -->
 
@@ -1141,7 +1203,7 @@
     Edit success
         <a href="#message">message</a>
     <h4 class="field-label">404</h4>
-    Account does not have access to a hub with that UUID or the channel does not exist
+    Account does not have access to a hub with that UUID or the channel or they do not exist
         <a href="#"></a>
     <h4 class="field-label">403</h4>
     Account did not send that message in the channel
@@ -1151,10 +1213,92 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="hubChannelGetLastNMessages"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}/last_messages</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelGetLastNMessages</span>)</div>
+    <div class="method-notes">Send a message in a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">count (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of messages to get default: 128 </div>      <div class="param">from (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Message to start getting messages from, if empty starts from last message sent in channel </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#message">message</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+}, {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Got messages successfully
+        
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel or they do not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to view messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="hubChannelGetMessage"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/{hubId}/{channelId}/{messageId}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubChannelGetMessage</span>)</div>
     <div class="method-notes">Get a message from a channel by it&#x27;s ID</div>
 
@@ -1162,20 +1306,17 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel that the message is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">accountId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to view the channel </div>      <div class="param">messageId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">messageId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of the message to get </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a message in the channel </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -1212,7 +1353,7 @@
     Message get success
         <a href="#message">message</a>
     <h4 class="field-label">404</h4>
-    Account does not have access to a hub with that UUID or the channel does not exist
+    Account does not have access to a hub with that UUID or the channel or they do not exist
         <a href="#"></a>
     <h4 class="field-label">403</h4>
     Account does not have permission to read messages in that channel
@@ -1222,10 +1363,92 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="hubChannelSearchMessages"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}/search_for/{term}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubChannelSearchMessages</span>)</div>
+    <div class="method-notes">Search for messages in the a channel</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hubId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">term (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; String to search for </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">max (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Maximum number of results default: 128 </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#message">message</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+}, {
+  "sender" : "sender",
+  "edited" : {
+    "times" : 6,
+    "dates" : [ null, null ]
+  },
+  "id" : "id",
+  "sent" : 0,
+  "content" : "content"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Got messages successfully
+        
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID or the channel or they do not exist
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Account does not have permission to view messages in that channel
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="hubChannelSendMessage"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/{hubId}/{channelId}/message</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/{hubId}/{channelId}/send_message</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubChannelSendMessage</span>)</div>
     <div class="method-notes">Send a message in a channel</div>
 
@@ -1233,18 +1456,18 @@
     <div class="field-items">
       <div class="param">hubId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub the channel the message is to be sent is in </div>      <div class="param">channelId (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">channelId (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the channel the message is to be sent in </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a channel in the hub </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has permission to send messages in the channel </div>      <div class="param">message (required)</div>
+      <div class="param">message (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Contents of the message </div>    </div>  <!-- field-items -->
 
@@ -1273,7 +1496,7 @@
     Message sent successfully
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Account does not have access to a hub with that UUID or the channel does not exist
+    Account does not have access to a hub with that UUID or the channel or they do not exist
         <a href="#"></a>
     <h4 class="field-label">403</h4>
     Account does not have permission to send messages in that channel
