@@ -24,13 +24,29 @@ tags:
   description: Operations performed on hubs
 - name: channel
   description: Operations performed on channels in hubs
+- name: message
+  description: Operations performed on messages
 paths:
   /user:
     get:
       tags:
       - user
       description: Get the information of the authenticated user
-      operationId: userGetAuth
+      operationId: userGet
+      responses:
+        "200":
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "403":
+          description: Not authenticated correctly
+    delete:
+      tags:
+      - user
+      description: Get the information of the authenticated user
+      operationId: userDelete
       responses:
         "200":
           description: A single user
@@ -41,11 +57,11 @@ paths:
         "403":
           description: Not authenticated correctly
   /user/{id}:
-    post:
+    get:
       tags:
       - user
       description: Get the public information of another user
-      operationId: userGet
+      operationId: userGetOther
       parameters:
       - name: id
         in: path
@@ -183,7 +199,7 @@ paths:
       - account
       description: Get the information of one of the currently authenticated user's
         accounts
-      operationId: userAccountGetAuth
+      operationId: userAccountGet
       parameters:
       - name: id
         in: path
@@ -214,7 +230,7 @@ paths:
       tags:
       - account
       description: Get the public information of a user's account
-      operationId: userAccountGet
+      operationId: userAccountGetOther
       parameters:
       - name: userId
         in: path
@@ -615,7 +631,7 @@ paths:
           type: string
       responses:
         "200":
-          description: Channel info
+          description: Channel get success
           content:
             application/json:
               schema:
@@ -623,8 +639,243 @@ paths:
         "404":
           description: Account does not have access to a hub with that UUID or the
             channel does not exist
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /channel/{hubId}/{channelId}/message:
+    get:
+      tags:
+      - message
+      description: Get a message from a channel by it's ID
+      operationId: hubChannelGetMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel that the message is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to view the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: messageId
+        in: query
+        description: UUID of the message to get
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Message get success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
         "403":
-          description: Account does not have permission to delete that channel
+          description: Account does not have permission to read messages in that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+    put:
+      tags:
+      - message
+      description: Edit a message in a channel
+      operationId: hubChannelEditMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel that the message to be edited is
+          in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of the channel the message is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of the account that sent the message
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: messageId
+        in: query
+        description: UUID of the message to edit
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: newContent
+        in: query
+        description: New contents of the message
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Edit success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account did not send that message in the channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+    post:
+      tags:
+      - message
+      description: Send a message in a channel
+      operationId: hubChannelSendMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel the message is to be sent is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of the channel the message is to be sent in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to send messages in the
+          channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: message
+        in: query
+        description: Contents of the message
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Message sent successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: UUID of the message
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account does not have permission to send messages in that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+    delete:
+      tags:
+      - message
+      description: Delete a message from a channel
+      operationId: hubChannelDeleteMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of the hub the channel the message is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID the channel the message is in
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: query
+        description: UUID of an account that has permission to delete messages in
+          the channel
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: messageId
+        in: query
+        description: UUID of the message to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Deletion success
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel does not exist
+        "403":
+          description: Account does not have permission to delete messages in that
+            channel
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -834,6 +1085,28 @@ components:
           type: string
           description: UUID of the hub the channel is in
       description: Represents a channel in a WICRS server
+    message:
+      required:
+      - content
+      - id
+      - sender
+      - sent
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the message
+        sent:
+          $ref: '#/components/schemas/date'
+        sender:
+          type: string
+          description: UUID of the account that sent the message
+        content:
+          type: string
+          description: Content of the sent message
+        edited:
+          $ref: '#/components/schemas/message_edited'
+      description: Message sent in a text channel
     user:
       required:
       - accounts
@@ -973,6 +1246,17 @@ components:
           description: UUID of the channel
         channel:
           $ref: '#/components/schemas/channel'
+    message_edited:
+      type: object
+      properties:
+        times:
+          type: integer
+          description: How many times the message was edited
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/date'
+      description: Times the message was edited
   responses:
     unauthorized_error:
       description: Authentication information is missing or invalid
