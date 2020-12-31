@@ -63,11 +63,11 @@ components:
           schema:
             $ref: '#/components/schemas/user'
     stripped_user:
-      description: A single user with personal information removed
+      description: A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/stripped_user'
+            $ref: '#/components/schemas/user'
     account:
       description: A single account
       content:
@@ -344,21 +344,6 @@ components:
           type: string
         account:
           $ref: '#/components/schemas/account'
-    stripped_user:
-      description: A user with some information removed/hidden to allow anyone to recognise them without compromising their privacy
-      type: object
-      required: [id, created, accounts]
-      properties:
-        id:
-          description: ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service
-          type: string
-        created:
-          $ref: '#/components/schemas/date'
-        accounts:
-          description: A list of the accounts the user owns
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/account_map_item'
 security:
   - user_token_auth: []
 paths:
