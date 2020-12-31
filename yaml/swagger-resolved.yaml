@@ -721,6 +721,7 @@ components:
           type: string
           description: UUID of the hub this member is from
         nickname:
+          type: string
           description: Name used by the member when in this hub
         groups:
           type: array
@@ -931,6 +932,7 @@ components:
       type: object
       properties:
         id:
+          type: string
           description: UUID of the account this member represents
         group:
           $ref: '#/components/schemas/hub_member'
@@ -941,6 +943,7 @@ components:
       type: object
       properties:
         id:
+          type: string
           description: UUID of the group
         group:
           $ref: '#/components/schemas/permission_group'
@@ -951,6 +954,7 @@ components:
       type: object
       properties:
         id:
+          type: string
           description: UUID of the channel
         channel:
           $ref: '#/components/schemas/channel'
