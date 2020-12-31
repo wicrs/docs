@@ -214,7 +214,8 @@
   <h4><a href="#Hub">Hub</a></h4>
   <ul>
   <li><a href="#hubCreateNamePost"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
-  <li><a href="#hubDeleteidDelete"><code><span class="http-method">delete</span> /hub/delete{id}</code></a></li>
+  <li><a href="#hubDeleteIdDelete"><code><span class="http-method">delete</span> /hub/delete/{id}</code></a></li>
+  <li><a href="#hubIdGet"><code><span class="http-method">get</span> /hub/{id}</code></a></li>
   <li><a href="#hubRenameIdPut"><code><span class="http-method">put</span> /hub/rename/{id}</code></a></li>
   </ul>
   <h4><a href="#User">User</a></h4>
@@ -657,27 +658,32 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#channel">channel</a>
       
-      String
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>""</code></pre>
+    <pre class="example"><code>{
+  "hub_id" : "hub_id",
+  "name" : "name",
+  "id" : "id"
+}</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
+      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Channel deletion success
-        <a href="#String">String</a>
+    Channel info
+        <a href="#channel">channel</a>
     <h4 class="field-label">404</h4>
     Account does not have access to a hub with that UUID or the channel does not exist
         <a href="#"></a>
@@ -802,11 +808,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubDeleteidDelete"></a>
+  <div class="method"><a name="hubDeleteIdDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubDeleteidDelete</span>)</div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubDeleteIdDelete</span>)</div>
     <div class="method-notes">Delete a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -840,6 +846,111 @@
     <h4 class="field-label">200</h4>
     Hub deletion success
         <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Account does not have access to a hub with that UUID
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubIdGet</span>)</div>
+    <div class="method-notes">Get a hub</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the hub to be delete </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that is a member of the hub </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#hub">hub</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "owner" : "owner",
+  "channels" : {
+    "key" : {
+      "id" : "",
+      "group" : {
+        "hub_id" : "hub_id",
+        "name" : "name",
+        "id" : "id"
+      }
+    }
+  },
+  "created" : 0,
+  "members" : {
+    "key" : {
+      "id" : "",
+      "group" : {
+        "hub_permissions" : {
+          "key" : {
+            "permission" : "All",
+            "setting" : "TRUE"
+          }
+        },
+        "hub" : "hub",
+        "nickname" : "",
+        "channel_permissions" : {
+          "key" : {
+            "permissions" : {
+              "permission" : "All"
+            },
+            "channel_id" : "channel_id"
+          }
+        },
+        "groups" : [ "groups", "groups" ],
+        "account" : "account"
+      }
+    }
+  },
+  "name" : "name",
+  "groups" : {
+    "key" : {
+      "id" : "",
+      "group" : {
+        "id" : "id"
+      }
+    }
+  },
+  "bans" : [ "bans", "bans" ],
+  "id" : "id",
+  "default_group" : "default_group"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hub info
+        <a href="#hub">hub</a>
     <h4 class="field-label">404</h4>
     Account does not have access to a hub with that UUID
         <a href="#"></a>
@@ -1042,6 +1153,10 @@
     <li><a href="#channel_permission_map_item"><code>channel_permission_map_item</code></a></li>
     <li><a href="#date"><code>date</code></a></li>
     <li><a href="#hub"><code>hub</code></a></li>
+    <li><a href="#hub_channels"><code>hub_channels</code></a></li>
+    <li><a href="#hub_groups"><code>hub_groups</code></a></li>
+    <li><a href="#hub_member"><code>hub_member</code></a></li>
+    <li><a href="#hub_members"><code>hub_members</code></a></li>
     <li><a href="#hub_permission"><code>hub_permission</code></a></li>
     <li><a href="#hub_permission_map"><code>hub_permission_map</code></a></li>
     <li><a href="#hub_permission_map_item"><code>hub_permission_map_item</code></a></li>
@@ -1115,8 +1230,51 @@
     <div class='model-description'>Represents a channel in a WICRS server</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub </div>
+<div class="param">owner (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that owns the hub </div>
+<div class="param">bans (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been banned from the hub </div>
+<div class="param">default_group (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the permission group assigned to new members </div>
 <div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
 <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
+<div class="param">members (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_members">map[String, hub_members]</a></span> Members of the hub </div>
+<div class="param">groups (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_groups">map[String, hub_groups]</a></span> Permission groups that belong to this hub </div>
+<div class="param">channels (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_channels">map[String, hub_channels]</a></span> Channels in the hub </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="hub_channels"><code>hub_channels</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the channel </div>
+<div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel">channel</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="hub_groups"><code>hub_groups</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the group </div>
+<div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#permission_group">permission_group</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="hub_member"><code>hub_member</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">account (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
+<div class="param">joined (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">hub (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub this member is from </div>
+<div class="param">nickname (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> Name used by the member when in this hub </div>
+<div class="param">groups (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> UUIDs of the permission groups this member is part of </div>
+<div class="param">hub_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
+<div class="param">channel_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="hub_members"><code>hub_members</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the account this member represents </div>
+<div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_member">hub_member</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
