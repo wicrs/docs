@@ -198,38 +198,38 @@
   <div class="method-summary"></div>
   <h4><a href="#Account">Account</a></h4>
   <ul>
-  <li><a href="#userAccountCreateNamePost"><code><span class="http-method">post</span> /user/account/create/{name}</code></a></li>
-  <li><a href="#userAccountIdDeleteDelete"><code><span class="http-method">delete</span> /user/account/{id}/delete</code></a></li>
-  <li><a href="#userAccountIdGet"><code><span class="http-method">get</span> /user/account/{id}</code></a></li>
-  <li><a href="#userAccountIdRenamePut"><code><span class="http-method">put</span> /user/account/{id}/rename</code></a></li>
-  <li><a href="#userUserIdAccountAccountIdGet"><code><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></a></li>
+  <li><a href="#userAccountCreate"><code><span class="http-method">post</span> /user/account/create/{name}</code></a></li>
+  <li><a href="#userAccountDelete"><code><span class="http-method">delete</span> /user/account/{id}/delete</code></a></li>
+  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></a></li>
+  <li><a href="#userAccountGetAuth"><code><span class="http-method">get</span> /user/account/{id}</code></a></li>
+  <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{id}/rename</code></a></li>
   </ul>
   <h4><a href="#Channel">Channel</a></h4>
   <ul>
-  <li><a href="#channelCreateIdNamePost"><code><span class="http-method">post</span> /channel/create/{id}/{name}</code></a></li>
-  <li><a href="#channelDeleteHubIdChannelIdDelete"><code><span class="http-method">delete</span> /channel/delete/{hubId}/{channelId}</code></a></li>
-  <li><a href="#channelHubIdChannelIdGet"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}</code></a></li>
-  <li><a href="#channelRenameHubIdChannelIdPut"><code><span class="http-method">put</span> /channel/rename/{hubId}/{channelId}</code></a></li>
+  <li><a href="#hubChannelCreate"><code><span class="http-method">post</span> /channel/create/{id}/{name}</code></a></li>
+  <li><a href="#hubChannelDelete"><code><span class="http-method">delete</span> /channel/delete/{hubId}/{channelId}</code></a></li>
+  <li><a href="#hubChannelGet"><code><span class="http-method">get</span> /channel/{hubId}/{channelId}</code></a></li>
+  <li><a href="#hubChannelRename"><code><span class="http-method">put</span> /channel/rename/{hubId}/{channelId}</code></a></li>
   </ul>
   <h4><a href="#Hub">Hub</a></h4>
   <ul>
-  <li><a href="#hubCreateNamePost"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
-  <li><a href="#hubDeleteIdDelete"><code><span class="http-method">delete</span> /hub/delete/{id}</code></a></li>
-  <li><a href="#hubIdGet"><code><span class="http-method">get</span> /hub/{id}</code></a></li>
-  <li><a href="#hubRenameIdPut"><code><span class="http-method">put</span> /hub/rename/{id}</code></a></li>
+  <li><a href="#hubCreate"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
+  <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/delete/{id}</code></a></li>
+  <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{id}</code></a></li>
+  <li><a href="#hubRename"><code><span class="http-method">put</span> /hub/rename/{id}</code></a></li>
   </ul>
   <h4><a href="#User">User</a></h4>
   <ul>
-  <li><a href="#userGet"><code><span class="http-method">get</span> /user</code></a></li>
-  <li><a href="#userIdPost"><code><span class="http-method">post</span> /user/{id}</code></a></li>
+  <li><a href="#userGet"><code><span class="http-method">post</span> /user/{id}</code></a></li>
+  <li><a href="#userGetAuth"><code><span class="http-method">get</span> /user</code></a></li>
   </ul>
 
   <h1><a name="Account">Account</a></h1>
-  <div class="method"><a name="userAccountCreateNamePost"></a>
+  <div class="method"><a name="userAccountCreate"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /user/account/create/{name}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountCreateNamePost</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userAccountCreate</span>)</div>
     <div class="method-notes">Get the public information of another user</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -281,11 +281,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="userAccountIdDeleteDelete"></a>
+  <div class="method"><a name="userAccountDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user/account/{id}/delete</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountIdDeleteDelete</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userAccountDelete</span>)</div>
     <div class="method-notes">Delete one of the authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -322,11 +322,74 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="userAccountIdGet"></a>
+  <div class="method"><a name="userAccountGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">userAccountGet</span>)</div>
+    <div class="method-notes">Get the public information of a user&#x27;s account</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">accountId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account being requested </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#stripped_user">stripped_user</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "created" : 0,
+  "id" : "id",
+  "accounts" : {
+    "key" : {
+      "id" : "id",
+      "account" : {
+        "parent_id" : "parent_id",
+        "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
+        "is_bot" : true,
+        "username" : "username"
+      }
+    }
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A single user with personal information removed
+        <a href="#stripped_user">stripped_user</a>
+    <h4 class="field-label">404</h4>
+    User with that ID does not exist or they do not own an account with that ID
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userAccountGetAuth"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /user/account/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountIdGet</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userAccountGetAuth</span>)</div>
     <div class="method-notes">Get the information of one of the currently authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -387,11 +450,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="userAccountIdRenamePut"></a>
+  <div class="method"><a name="userAccountRename"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /user/account/{id}/rename</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountIdRenamePut</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userAccountRename</span>)</div>
     <div class="method-notes">Change the username of one of the authenticated user&#x27;s accounts</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -445,75 +508,12 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="userUserIdAccountAccountIdGet"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{userId}/account/{accountId}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userUserIdAccountAccountIdGet</span>)</div>
-    <div class="method-notes">Get the public information of a user&#x27;s account</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">userId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">accountId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the account being requested </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#stripped_user">stripped_user</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "created" : 0,
-  "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  }
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single user with personal information removed
-        <a href="#stripped_user">stripped_user</a>
-    <h4 class="field-label">404</h4>
-    User with that ID does not exist or they do not own an account with that ID
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
   <h1><a name="Channel">Channel</a></h1>
-  <div class="method"><a name="channelCreateIdNamePost"></a>
+  <div class="method"><a name="hubChannelCreate"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /channel/create/{id}/{name}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">channelCreateIdNamePost</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubChannelCreate</span>)</div>
     <div class="method-notes">Create a new channel in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -572,11 +572,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="channelDeleteHubIdChannelIdDelete"></a>
+  <div class="method"><a name="hubChannelDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /channel/delete/{hubId}/{channelId}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">channelDeleteHubIdChannelIdDelete</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubChannelDelete</span>)</div>
     <div class="method-notes">Delete a channel in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -631,11 +631,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="channelHubIdChannelIdGet"></a>
+  <div class="method"><a name="hubChannelGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /channel/{hubId}/{channelId}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">channelHubIdChannelIdGet</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubChannelGet</span>)</div>
     <div class="method-notes">Get channel metadata</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -695,11 +695,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="channelRenameHubIdChannelIdPut"></a>
+  <div class="method"><a name="hubChannelRename"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /channel/rename/{hubId}/{channelId}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">channelRenameHubIdChannelIdPut</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubChannelRename</span>)</div>
     <div class="method-notes">Create a new channel in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -761,11 +761,11 @@
   </div> <!-- method -->
   <hr/>
   <h1><a name="Hub">Hub</a></h1>
-  <div class="method"><a name="hubCreateNamePost"></a>
+  <div class="method"><a name="hubCreate"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /hub/create/{name}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubCreateNamePost</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubCreate</span>)</div>
     <div class="method-notes">Create a new hub owned by the authenticated user</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -808,11 +808,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubDeleteIdDelete"></a>
+  <div class="method"><a name="hubDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubDeleteIdDelete</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubDelete</span>)</div>
     <div class="method-notes">Delete a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -854,11 +854,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubIdGet"></a>
+  <div class="method"><a name="hubGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubIdGet</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubGet</span>)</div>
     <div class="method-notes">Get a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -959,11 +959,11 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubRenameIdPut"></a>
+  <div class="method"><a name="hubRename"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /hub/rename/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubRenameIdPut</span>)</div>
+    <div class="method-summary"> (<span class="nickname">hubRename</span>)</div>
     <div class="method-notes">Rename a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -1023,66 +1023,8 @@
   <div class="method"><a name="userGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userGet</span>)</div>
-    <div class="method-notes">Get the information of the authenticated user</div>
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#user">user</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
-  "created" : 0,
-  "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single user
-        <a href="#user">user</a>
-    <h4 class="field-label">403</h4>
-    Not authenticated correctly
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userIdPost"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /user/{id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userIdPost</span>)</div>
+    <div class="method-summary"> (<span class="nickname">userGet</span>)</div>
     <div class="method-notes">Get the public information of another user</div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -1137,6 +1079,64 @@
     <h4 class="field-label">400</h4>
     Information on the constraints for a string
         <a href="#inline_response_400">inline_response_400</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userGetAuth"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">userGetAuth</span>)</div>
+    <div class="method-notes">Get the information of the authenticated user</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#user">user</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
+  "created" : 0,
+  "id" : "id",
+  "accounts" : {
+    "key" : {
+      "id" : "id",
+      "account" : {
+        "parent_id" : "parent_id",
+        "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
+        "is_bot" : true,
+        "username" : "username"
+      }
+    }
+  },
+  "email" : "email"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A single user
+        <a href="#user">user</a>
+    <h4 class="field-label">403</h4>
+    Not authenticated correctly
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
 
