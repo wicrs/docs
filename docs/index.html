@@ -896,13 +896,13 @@
         "name" : "name",
         "id" : "id"
       },
-      "id" : ""
+      "id" : "id"
     }
   },
   "created" : 0,
   "members" : {
     "key" : {
-      "id" : "",
+      "id" : "id",
       "group" : {
         "hub_permissions" : {
           "key" : {
@@ -911,7 +911,7 @@
           }
         },
         "hub" : "hub",
-        "nickname" : "",
+        "nickname" : "nickname",
         "channel_permissions" : {
           "key" : {
             "permissions" : {
@@ -928,7 +928,7 @@
   "name" : "name",
   "groups" : {
     "key" : {
-      "id" : "",
+      "id" : "id",
       "group" : {
         "id" : "id"
       }
@@ -1242,7 +1242,7 @@
     <h3><a name="hub_channels"><code>hub_channels</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the channel </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the channel </div>
 <div class="param">channel </div><div class="param-desc"><span class="param-type"><a href="#channel">channel</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -1250,7 +1250,7 @@
     <h3><a name="hub_groups"><code>hub_groups</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the group </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the group </div>
 <div class="param">group </div><div class="param-desc"><span class="param-type"><a href="#permission_group">permission_group</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -1261,7 +1261,7 @@
       <div class="param">account </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
 <div class="param">joined </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
 <div class="param">hub </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub this member is from </div>
-<div class="param">nickname </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> Name used by the member when in this hub </div>
+<div class="param">nickname </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name used by the member when in this hub </div>
 <div class="param">groups </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> UUIDs of the permission groups this member is part of </div>
 <div class="param">hub_permissions </div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
 <div class="param">channel_permissions </div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
@@ -1271,7 +1271,7 @@
     <h3><a name="hub_members"><code>hub_members</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the account this member represents </div>
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
 <div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_member">hub_member</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
