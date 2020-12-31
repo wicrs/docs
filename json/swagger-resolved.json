@@ -39,6 +39,7 @@
       "get" : {
         "tags" : [ "user" ],
         "description" : "Get the information of the authenticated user",
+        "operationId" : "userGetAuth",
         "responses" : {
           "200" : {
             "description" : "A single user",
@@ -60,6 +61,7 @@
       "post" : {
         "tags" : [ "user" ],
         "description" : "Get the public information of another user",
+        "operationId" : "userGet",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -99,6 +101,7 @@
       "post" : {
         "tags" : [ "account" ],
         "description" : "Get the public information of another user",
+        "operationId" : "userAccountCreate",
         "parameters" : [ {
           "name" : "name",
           "in" : "path",
@@ -149,6 +152,7 @@
       "delete" : {
         "tags" : [ "account" ],
         "description" : "Delete one of the authenticated user's accounts",
+        "operationId" : "userAccountDelete",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -185,6 +189,7 @@
       "put" : {
         "tags" : [ "account" ],
         "description" : "Change the username of one of the authenticated user's accounts",
+        "operationId" : "userAccountRename",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -250,6 +255,7 @@
       "get" : {
         "tags" : [ "account" ],
         "description" : "Get the information of one of the currently authenticated user's accounts",
+        "operationId" : "userAccountGetAuth",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -293,6 +299,7 @@
       "get" : {
         "tags" : [ "account" ],
         "description" : "Get the public information of a user's account",
+        "operationId" : "userAccountGet",
         "parameters" : [ {
           "name" : "userId",
           "in" : "path",
@@ -335,6 +342,7 @@
       "post" : {
         "tags" : [ "hub" ],
         "description" : "Create a new hub owned by the authenticated user",
+        "operationId" : "hubCreate",
         "parameters" : [ {
           "name" : "accountId",
           "in" : "query",
@@ -388,6 +396,7 @@
       "get" : {
         "tags" : [ "hub" ],
         "description" : "Get a hub",
+        "operationId" : "hubGet",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -441,6 +450,7 @@
       "delete" : {
         "tags" : [ "hub" ],
         "description" : "Delete a hub",
+        "operationId" : "hubDelete",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -487,6 +497,7 @@
       "put" : {
         "tags" : [ "hub" ],
         "description" : "Rename a hub",
+        "operationId" : "hubRename",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -562,6 +573,7 @@
       "post" : {
         "tags" : [ "channel" ],
         "description" : "Create a new channel in a hub",
+        "operationId" : "hubChannelCreate",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -639,6 +651,7 @@
       "put" : {
         "tags" : [ "channel" ],
         "description" : "Create a new channel in a hub",
+        "operationId" : "hubChannelRename",
         "parameters" : [ {
           "name" : "hubId",
           "in" : "path",
@@ -726,6 +739,7 @@
       "delete" : {
         "tags" : [ "channel" ],
         "description" : "Delete a channel in a hub",
+        "operationId" : "hubChannelDelete",
         "parameters" : [ {
           "name" : "hubId",
           "in" : "path",
@@ -792,6 +806,7 @@
       "get" : {
         "tags" : [ "channel" ],
         "description" : "Get channel metadata",
+        "operationId" : "hubChannelGet",
         "parameters" : [ {
           "name" : "hubId",
           "in" : "path",
