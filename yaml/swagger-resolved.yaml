@@ -17,15 +17,17 @@ security:
 - user_token_auth: []
 tags:
 - name: user
-  description: Operations performed on users
+  description: Operations related to users
+- name: group
+  description: Operations related to permission groups
 - name: account
-  description: Operations performed on accounts owned by users
+  description: Operations related to accounts owned by users
 - name: hub
-  description: Operations performed on hubs
+  description: Operations related to hubs
 - name: channel
-  description: Operations performed on channels in hubs
+  description: Operations related to channels in hubs
 - name: message
-  description: Operations performed on messages
+  description: Operations related to messages
 paths:
   /user:
     get:
@@ -119,16 +121,17 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /user/account/{id}/delete:
+  /user/account/{accountId}/delete:
     delete:
       tags:
       - account
       description: Delete one of the authenticated user's accounts
       operationId: userAccountDelete
       parameters:
-      - name: id
+      - name: accountId
         in: path
-        description: UUID of the account to delete
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
         style: simple
         explode: false
@@ -146,16 +149,17 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /user/account/{id}/rename:
+  /user/account/{accountId}/rename:
     put:
       tags:
       - account
       description: Change the username of one of the authenticated user's accounts
       operationId: userAccountRename
       parameters:
-      - name: id
+      - name: accountId
         in: path
-        description: UUID of the account to rename
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
         style: simple
         explode: false
@@ -193,7 +197,7 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /user/account/{id}:
+  /user/account/{accountId}:
     get:
       tags:
       - account
@@ -201,9 +205,10 @@ paths:
         accounts
       operationId: userAccountGet
       parameters:
-      - name: id
+      - name: accountId
         in: path
-        description: ID of the account
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
         style: simple
         explode: false
@@ -242,7 +247,8 @@ paths:
           type: string
       - name: accountId
         in: path
-        description: ID of the account being requested
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
         style: simple
         explode: false
@@ -266,11 +272,12 @@ paths:
       operationId: hubCreate
       parameters:
       - name: accountId
-        in: query
-        description: UUID of the account that will have ownership of the hub
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       - name: name
@@ -297,27 +304,28 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /hub/{id}:
+  /hub/{hubId}:
     get:
       tags:
       - hub
       description: Get a hub
       operationId: hubGet
       parameters:
-      - name: id
+      - name: hubId
         in: path
-        description: UUID of the hub to be delete
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that is a member of the hub
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -336,27 +344,28 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /hub/delete/{id}:
+  /hub/delete/{hubId}:
     delete:
       tags:
       - hub
       description: Delete a hub
       operationId: hubDelete
       parameters:
-      - name: id
+      - name: hubId
         in: path
-        description: UUID of the hub to be delete
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of the account that owns the hub
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -371,16 +380,16 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /hub/rename/{id}:
+  /hub/rename/{hubId}:
     put:
       tags:
       - hub
       description: Rename a hub
       operationId: hubRename
       parameters:
-      - name: id
+      - name: hubId
         in: path
-        description: UUID of the hub to be delete
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -395,11 +404,12 @@ paths:
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of the account that owns the hub
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -426,16 +436,16 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /channel/create/{id}/{name}:
+  /channel/create/{hubId}/{name}:
     post:
       tags:
       - channel
       description: Create a new channel in a hub
       operationId: hubChannelCreate
       parameters:
-      - name: id
+      - name: hubId
         in: path
-        description: UUID of the hub the channel should be created in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -450,12 +460,12 @@ paths:
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to create channels in
-          the hub
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -493,7 +503,7 @@ paths:
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel to be renamed is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -501,7 +511,7 @@ paths:
           type: string
       - name: channelId
         in: path
-        description: UUID of the channel to be renamed
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
@@ -516,11 +526,12 @@ paths:
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to rename the channel
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -558,7 +569,7 @@ paths:
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel to be renamed is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -566,17 +577,19 @@ paths:
           type: string
       - name: channelId
         in: path
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to delete the channel
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -608,7 +621,7 @@ paths:
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel to be renamed is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -616,17 +629,19 @@ paths:
           type: string
       - name: channelId
         in: path
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to view the channel
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -646,16 +661,16 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-  /channel/{hubId}/{channelId}/message:
+  /channel/{hubId}/{channelId}/delete_all_of:
     get:
       tags:
       - message
-      description: Get a message from a channel by it's ID
-      operationId: hubChannelGetMessage
+      description: Search for messages in the a channel
+      operationId: hubChannelDeleteMessages
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel that the message is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -663,39 +678,48 @@ paths:
           type: string
       - name: channelId
         in: path
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: messages
         in: query
-        description: UUID of an account that has permission to view the channel
+        description: Array of the UUIDs of messages to delete
         required: true
         style: form
         explode: true
-        schema:
-          type: string
-      - name: messageId
-        in: query
-        description: UUID of the message to get
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
       responses:
         "200":
-          description: Message get success
+          description: Got messages successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/message'
+                type: array
+                description: Array containing all messages found
+                items:
+                  $ref: '#/components/schemas/message'
         "404":
           description: Account does not have access to a hub with that UUID or the
-            channel does not exist
+            channel or they do not exist
         "403":
-          description: Account does not have permission to read messages in that channel
+          description: Account does not have permission to view messages in that channel
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -703,16 +727,16 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
-    put:
+  /channel/{hubId}/{channelId}/search_for/{term}:
+    get:
       tags:
       - message
-      description: Edit a message in a channel
-      operationId: hubChannelEditMessage
+      description: Search for messages in the a channel
+      operationId: hubChannelSearchMessages
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel that the message to be edited is
-          in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -720,48 +744,55 @@ paths:
           type: string
       - name: channelId
         in: path
-        description: UUID of the channel the message is in
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of the account that sent the message
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: term
+        in: path
+        description: String to search for
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: max
+        in: query
+        description: Maximum number of results
+        required: false
         style: form
         explode: true
         schema:
-          type: string
-      - name: messageId
-        in: query
-        description: UUID of the message to edit
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: newContent
-        in: query
-        description: New contents of the message
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+          maximum: 1024
+          minimum: 1
+          type: integer
+          default: 128
       responses:
         "200":
-          description: Edit success
+          description: Got messages successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/message'
+                type: array
+                description: Array containing all messages found
+                items:
+                  $ref: '#/components/schemas/message'
         "404":
           description: Account does not have access to a hub with that UUID or the
-            channel does not exist
+            channel or they do not exist
         "403":
-          description: Account did not send that message in the channel
+          description: Account does not have permission to view messages in that channel
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -769,6 +800,82 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+  /channel/{hubId}/{channelId}/last_messages:
+    get:
+      tags:
+      - message
+      description: Send a message in a channel
+      operationId: hubChannelGetLastNMessages
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of a hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of a channel in the hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: Number of messages to get
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 1024
+          minimum: 1
+          type: integer
+          default: 128
+      - name: from
+        in: query
+        description: Message to start getting messages from, if empty starts from
+          last message sent in channel
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Got messages successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array containing the number of messages requested or
+                  less if the channel did not have enough
+                items:
+                  $ref: '#/components/schemas/message'
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel or they do not exist
+        "403":
+          description: Account does not have permission to view messages in that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /channel/{hubId}/{channelId}/send_message:
     post:
       tags:
       - message
@@ -777,7 +884,7 @@ paths:
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel the message is to be sent is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -785,19 +892,19 @@ paths:
           type: string
       - name: channelId
         in: path
-        description: UUID of the channel the message is to be sent in
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to send messages in the
-          channel
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       - name: message
@@ -818,9 +925,134 @@ paths:
                 description: UUID of the message
         "404":
           description: Account does not have access to a hub with that UUID or the
-            channel does not exist
+            channel or they do not exist
         "403":
           description: Account does not have permission to send messages in that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /message/{hubId}/{channelId}/{messageId}:
+    get:
+      tags:
+      - message
+      description: Get a message from a channel by it's ID
+      operationId: hubChannelGetMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of a hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of a channel in the hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: messageId
+        in: path
+        description: UUID of a message in the channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Message get success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel or they do not exist
+        "403":
+          description: Account does not have permission to read messages in that channel
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+    put:
+      tags:
+      - message
+      description: Edit a message in a channel
+      operationId: hubChannelEditMessage
+      parameters:
+      - name: hubId
+        in: path
+        description: UUID of a hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: channelId
+        in: path
+        description: UUID of a channel in the hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: messageId
+        in: path
+        description: UUID of a message in the channel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: newContent
+        in: query
+        description: New contents of the message
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Edit success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        "404":
+          description: Account does not have access to a hub with that UUID or the
+            channel or they do not exist
+        "403":
+          description: Account did not send that message in the channel
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -836,7 +1068,7 @@ paths:
       parameters:
       - name: hubId
         in: path
-        description: UUID of the hub the channel the message is in
+        description: UUID of a hub
         required: true
         style: simple
         explode: false
@@ -844,27 +1076,27 @@ paths:
           type: string
       - name: channelId
         in: path
-        description: UUID the channel the message is in
+        description: UUID of a channel in the hub
         required: true
         style: simple
         explode: false
         schema:
           type: string
       - name: accountId
-        in: query
-        description: UUID of an account that has permission to delete messages in
-          the channel
+        in: path
+        description: UUID of an account that has the necessary permissions and access
+          to the hub and channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       - name: messageId
-        in: query
-        description: UUID of the message to delete
+        in: path
+        description: UUID of a message in the channel
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           type: string
       responses:
@@ -872,7 +1104,7 @@ paths:
           description: Deletion success
         "404":
           description: Account does not have access to a hub with that UUID or the
-            channel does not exist
+            channel or they do not exist
         "403":
           description: Account does not have permission to delete messages in that
             channel
@@ -1295,6 +1527,44 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_response_400'
+  parameters:
+    hub_id:
+      name: hubId
+      in: path
+      description: UUID of a hub
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    channel_id:
+      name: channelId
+      in: path
+      description: UUID of a channel in the hub
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    account_id:
+      name: accountId
+      in: path
+      description: UUID of an account that has the necessary permissions and access
+        to the hub and channel
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    message_id:
+      name: messageId
+      in: path
+      description: UUID of a message in the channel
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
   securitySchemes:
     user_token_auth:
       type: http
