@@ -101,11 +101,11 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A single user with personal information removed",
+            "description" : "A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/stripped_user"
+                  "$ref" : "#/components/schemas/user"
                 }
               }
             }
@@ -295,11 +295,11 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A single user with personal information removed",
+            "description" : "A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/stripped_user"
+                  "$ref" : "#/components/schemas/user"
                 }
               }
             }
@@ -349,11 +349,11 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A single user with personal information removed",
+            "description" : "A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/stripped_user"
+                  "$ref" : "#/components/schemas/user"
                 }
               }
             }
@@ -1777,27 +1777,6 @@
           }
         }
       },
-      "stripped_user" : {
-        "required" : [ "accounts", "created", "id" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "description" : "ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service"
-          },
-          "created" : {
-            "$ref" : "#/components/schemas/date"
-          },
-          "accounts" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/account_map_item"
-            },
-            "description" : "A list of the accounts the user owns"
-          }
-        },
-        "description" : "A user with some information removed/hidden to allow anyone to recognise them without compromising their privacy"
-      },
       "inline_response_400" : {
         "required" : [ "allowed_chars", "max_chars", "min_chars" ],
         "type" : "object",
@@ -1898,11 +1877,11 @@
         }
       },
       "stripped_user" : {
-        "description" : "A single user with personal information removed",
+        "description" : "A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)",
         "content" : {
           "application/json" : {
             "schema" : {
-              "$ref" : "#/components/schemas/stripped_user"
+              "$ref" : "#/components/schemas/user"
             }
           }
         }
