@@ -384,7 +384,60 @@
         }
       }
     },
-    "/hub/delete{id}" : {
+    "/hub/{id}" : {
+      "get" : {
+        "tags" : [ "hub" ],
+        "description" : "Get a hub",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "UUID of the hub to be delete",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountId",
+          "in" : "query",
+          "description" : "UUID of an account that is a member of the hub",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Hub info",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/hub"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Account does not have access to a hub with that UUID"
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hub/delete/{id}" : {
       "delete" : {
         "tags" : [ "hub" ],
         "description" : "Delete a hub",
@@ -771,12 +824,11 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Channel deletion success",
+            "description" : "Channel info",
             "content" : {
-              "text/plain" : {
+              "application/json" : {
                 "schema" : {
-                  "type" : "string",
-                  "description" : "The name of the deleted channel"
+                  "$ref" : "#/components/schemas/channel"
                 }
               }
             }
@@ -832,13 +884,10 @@
           "type" : "object",
           "properties" : {
             "channel_id" : {
-              "$ref" : "#/components/schemas/channel_permission"
+              "type" : "string"
             },
             "permissions" : {
-              "type" : "object",
-              "additionalProperties" : {
-                "$ref" : "#/components/schemas/channel_permission_map_item"
-              }
+              "$ref" : "#/components/schemas/channel_permission_map_item"
             }
           }
         },
@@ -872,6 +921,38 @@
         "type" : "integer",
         "description" : "Time in milliseconds from 1 Jan 1970"
       },
+      "hub_member" : {
+        "type" : "object",
+        "properties" : {
+          "account" : {
+            "type" : "string",
+            "description" : "UUID of the account this member represents"
+          },
+          "joined" : {
+            "$ref" : "#/components/schemas/date"
+          },
+          "hub" : {
+            "type" : "string",
+            "description" : "UUID of the hub this member is from"
+          },
+          "nickname" : {
+            "description" : "Name used by the member when in this hub"
+          },
+          "groups" : {
+            "type" : "array",
+            "description" : "UUIDs of the permission groups this member is part of",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "hub_permissions" : {
+            "$ref" : "#/components/schemas/hub_permission_map"
+          },
+          "channel_permissions" : {
+            "$ref" : "#/components/schemas/channel_permission_map"
+          }
+        }
+      },
       "hub" : {
         "type" : "object",
         "properties" : {
@@ -879,12 +960,48 @@
             "type" : "string",
             "description" : "UUID of the hub"
           },
+          "owner" : {
+            "type" : "string",
+            "description" : "UUID of the account that owns the hub"
+          },
+          "bans" : {
+            "type" : "array",
+            "description" : "List of IDs of users that have been banned from the hub",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "default_group" : {
+            "type" : "string",
+            "description" : "UUID of the permission group assigned to new members"
+          },
           "created" : {
             "$ref" : "#/components/schemas/date"
           },
           "name" : {
             "type" : "string",
             "description" : "Name of the channel"
+          },
+          "members" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/hub_members"
+            },
+            "description" : "Members of the hub"
+          },
+          "groups" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/hub_groups"
+            },
+            "description" : "Permission groups that belong to this hub"
+          },
+          "channels" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/hub_channels"
+            },
+            "description" : "Channels in the hub"
           }
         },
         "description" : "Represents a channel in a WICRS server"
@@ -1084,6 +1201,39 @@
           }
         },
         "description" : "String format information"
+      },
+      "hub_members" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "description" : "UUID of the account this member represents"
+          },
+          "group" : {
+            "$ref" : "#/components/schemas/hub_member"
+          }
+        }
+      },
+      "hub_groups" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "description" : "UUID of the group"
+          },
+          "group" : {
+            "$ref" : "#/components/schemas/permission_group"
+          }
+        }
+      },
+      "hub_channels" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "description" : "UUID of the channel"
+          },
+          "group" : {
+            "$ref" : "#/components/schemas/channel"
+          }
+        }
       }
     },
     "responses" : {
