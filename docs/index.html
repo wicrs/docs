@@ -353,7 +353,7 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#stripped_user">stripped_user</a>
+      <a href="#user">user</a>
       
     </div>
 
@@ -362,6 +362,7 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
   "created" : 0,
   "id" : "id",
   "accounts" : {
@@ -375,7 +376,8 @@
         "username" : "username"
       }
     }
-  }
+  },
+  "email" : "email"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -388,8 +390,8 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    A single user with personal information removed
-        <a href="#stripped_user">stripped_user</a>
+    A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
+        <a href="#user">user</a>
     <h4 class="field-label">404</h4>
     No account with that ID
         <a href="#"></a>
@@ -420,7 +422,7 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#stripped_user">stripped_user</a>
+      <a href="#user">user</a>
       
     </div>
 
@@ -429,6 +431,7 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
   "created" : 0,
   "id" : "id",
   "accounts" : {
@@ -442,7 +445,8 @@
         "username" : "username"
       }
     }
-  }
+  },
+  "email" : "email"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -454,8 +458,8 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    A single user with personal information removed
-        <a href="#stripped_user">stripped_user</a>
+    A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
+        <a href="#user">user</a>
     <h4 class="field-label">404</h4>
     User with that ID does not exist or they do not own an account with that ID
         <a href="#"></a>
@@ -1643,7 +1647,7 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#stripped_user">stripped_user</a>
+      <a href="#user">user</a>
       
     </div>
 
@@ -1652,6 +1656,7 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "oauth_service" : "oauth_service",
   "created" : 0,
   "id" : "id",
   "accounts" : {
@@ -1665,7 +1670,8 @@
         "username" : "username"
       }
     }
-  }
+  },
+  "email" : "email"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -1677,8 +1683,8 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    A single user with personal information removed
-        <a href="#stripped_user">stripped_user</a>
+    A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
+        <a href="#user">user</a>
     <h4 class="field-label">400</h4>
     Information on the constraints for a string
         <a href="#inline_response_400">inline_response_400</a>
@@ -1710,7 +1716,6 @@
     <li><a href="#message_edited"><code>message_edited</code></a></li>
     <li><a href="#permission_group"><code>permission_group</code></a></li>
     <li><a href="#permission_setting"><code>permission_setting</code></a></li>
-    <li><a href="#stripped_user"><code>stripped_user</code></a></li>
     <li><a href="#user"><code>user</code></a></li>
   </ol>
 
@@ -1888,15 +1893,6 @@
     <div class='model-description'>Current state of a permission for a user or a permission group</div>
     <div class="field-items">
           </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="stripped_user"><code>stripped_user</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A user with some information removed/hidden to allow anyone to recognise them without compromising their privacy</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
-<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">accounts </div><div class="param-desc"><span class="param-type"><a href="#account_map_item">map[String, account_map_item]</a></span> A list of the accounts the user owns </div>
-    </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="user"><code>user</code></a> <a class="up" href="#__Models">Up</a></h3>
