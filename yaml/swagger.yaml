@@ -46,11 +46,11 @@ components:
           schema:
             $ref: '#/components/schemas/account'
     stripped_account:
-      description: A single account with personal information removed
+      description: A single account with the IDs of hubs replaced with hashes
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/stripped_account'
+            $ref: '#/components/schemas/account'
     string_constraints:
       description: Information on the constraints for a string
       content:
@@ -58,6 +58,7 @@ components:
           schema:
             type: object
             description: String format information
+            required: [allowed_chars, max_chars, min_chars]
             properties:
               allowed_chars:
                 type: string
@@ -94,6 +95,7 @@ components:
       type: object
       additionalProperties:
         type: object
+        required: [channel_id, permissions]
         properties:
           channel_id:
             type: string
@@ -102,6 +104,7 @@ components:
     channel_permission_map_item:
       description: Channel permission and it's current setting
       type: object
+      required: [permission, setting]
       properties:
         permission:
           $ref: '#/components/schemas/channel_permission'
@@ -110,6 +113,7 @@ components:
     hub_permission_map_item:
       description: Hub permission and it's current setting
       type: object
+      required: [permission, setting]
       properties:
         permission:
           $ref: '#/components/schemas/hub_permission'
@@ -120,6 +124,7 @@ components:
       type: integer
     hub_member:
       type: object
+      required: [account, joined, hub, nickname, groups, hub_permissions, channel_permissions]
       properties:
         account:
           description: UUID of the account this member represents
@@ -141,8 +146,9 @@ components:
         channel_permissions:
           $ref: '#/components/schemas/channel_permission_map'
     hub:
-      description: Represents a channel in a WICRS server
+      description: Represents a hub in a WICRS server
       type: object
+      required: [id, owner, default_group, created, name, groups, members, bans, channels]
       properties:
         id:
           description: UUID of the hub
@@ -178,6 +184,7 @@ components:
           type: object
           additionalProperties:
             type: object
+            required: [id, group]
             properties:
               id:
                 description: UUID of the group
@@ -188,14 +195,16 @@ components:
           type: object
           additionalProperties:
             type: object
+            required: [id, channel]
             properties:
               id:
                 description: UUID of the channel
-              group:
+              channel:
                 $ref: '#/components/schemas/channel'
     permission_group:
       description: Represents a group of permissions that can be given to any member of a hub the hub the group is in
       type: object
+      required: [id, created, hub_permissions, channel_permissions]
       properties:
         id:
           description: UUID of the hub the group is in
@@ -209,6 +218,7 @@ components:
     channel:
       description: Represents a channel in a WICRS server
       type: object
+      required: [id, created, name, hub_id]
       properties:
         id:
           description: UUID of the channel
@@ -224,6 +234,7 @@ components:
     user:
       description: Represents a user of WICRS
       type: object
+      required: [id, oauth_service, created, email, accounts]
       properties:
         id:
           description: ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service
@@ -243,6 +254,7 @@ components:
             $ref: '#/components/schemas/account_map_item'
     account:
       type: object
+      required: [id, username, created, parent_id, is_bot, in_hubs]
       properties:
         id:
           description: UUID of the account
@@ -266,6 +278,7 @@ components:
             type: string
     account_map_item:
       type: object
+      required: [id,  account]
       properties:
         id:
           type: string
@@ -274,8 +287,9 @@ components:
     stripped_user:
       description: A user with some information removed/hidden to allow anyone to recognise them without compromising their privacy
       type: object
+      required: [id, created, accounts]
       properties:
-        user_id:
+        id:
           description: ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service
           type: string
         created:
@@ -284,38 +298,7 @@ components:
           description: A list of the accounts the user owns
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/stripped_account_map_item'
-    stripped_account:
-      description: An account with some information removed/hidden to allow anyone to view the account without compromising the holder's privacy
-      type: object
-      properties:
-        account_id:
-          description: UUID of the account
-          type: string
-        username:
-          description: Username of the account
-          type: string
-        created:
-          $ref: '#/components/schemas/date'
-        parent_id:
-          description: ID of the user that owns the account
-          type: string
-        is_bot:
-          description: Whether or not the account is dedicated to automated tasks/bot work
-          type: boolean
-        in_hubs:
-          description: A list of SHA256 hashes of the IDs of hubs the account is a member of
-          type:  array
-          items:
-            description: SHA256 hashe of the UUID of a hub
-            type: string
-    stripped_account_map_item:
-      type: object
-      properties:
-        id:
-          type: string
-        account:
-          $ref: '#/components/schemas/stripped_account'
+            $ref: '#/components/schemas/account_map_item'
 security:
   - user_token_auth: []
 paths:
