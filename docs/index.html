@@ -351,15 +351,15 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "user_id" : "user_id",
   "created" : 0,
+  "id" : "id",
   "accounts" : {
     "key" : {
       "id" : "id",
       "account" : {
-        "account_id" : "account_id",
         "parent_id" : "parent_id",
         "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
         "is_bot" : true,
         "username" : "username"
       }
@@ -476,15 +476,15 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "user_id" : "user_id",
   "created" : 0,
+  "id" : "id",
   "accounts" : {
     "key" : {
       "id" : "id",
       "account" : {
-        "account_id" : "account_id",
         "parent_id" : "parent_id",
         "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
         "is_bot" : true,
         "username" : "username"
       }
@@ -891,12 +891,12 @@
   "owner" : "owner",
   "channels" : {
     "key" : {
-      "id" : "",
-      "group" : {
+      "channel" : {
         "hub_id" : "hub_id",
         "name" : "name",
         "id" : "id"
-      }
+      },
+      "id" : ""
     }
   },
   "created" : 0,
@@ -1107,15 +1107,15 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "user_id" : "user_id",
   "created" : 0,
+  "id" : "id",
   "accounts" : {
     "key" : {
       "id" : "id",
       "account" : {
-        "account_id" : "account_id",
         "parent_id" : "parent_id",
         "in_hubs" : [ "in_hubs", "in_hubs" ],
+        "id" : "id",
         "is_bot" : true,
         "username" : "username"
       }
@@ -1163,8 +1163,6 @@
     <li><a href="#inline_response_400"><code>inline_response_400</code></a></li>
     <li><a href="#permission_group"><code>permission_group</code></a></li>
     <li><a href="#permission_setting"><code>permission_setting</code></a></li>
-    <li><a href="#stripped_account"><code>stripped_account</code></a></li>
-    <li><a href="#stripped_account_map_item"><code>stripped_account_map_item</code></a></li>
     <li><a href="#stripped_user"><code>stripped_user</code></a></li>
     <li><a href="#user"><code>user</code></a></li>
   </ol>
@@ -1173,30 +1171,30 @@
     <h3><a name="account"><code>account</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account </div>
-<div class="param">username (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Username of the account </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">parent_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user that owns the account </div>
-<div class="param">is_bot (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the account is dedicated to automated tasks/bot work </div>
-<div class="param">in_hubs (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of the UUIDs of hubs the account is a member of </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account </div>
+<div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Username of the account </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">parent_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user that owns the account </div>
+<div class="param">is_bot </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the account is dedicated to automated tasks/bot work </div>
+<div class="param">in_hubs </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of the UUIDs of hubs the account is a member of </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="account_map_item"><code>account_map_item</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">account (optional)</div><div class="param-desc"><span class="param-type"><a href="#account">account</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">account </div><div class="param-desc"><span class="param-type"><a href="#account">account</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="channel"><code>channel</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Represents a channel in a WICRS server</div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the channel </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
-<div class="param">hub_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub the channel is in </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the channel </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
+<div class="param">hub_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub the channel is in </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1215,8 +1213,8 @@
     <h3><a name="channel_permission_map_item"><code>channel_permission_map_item</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Channel permission and it&#x27;s current setting</div>
     <div class="field-items">
-      <div class="param">permission (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel_permission">channel_permission</a></span>  </div>
-<div class="param">setting (optional)</div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
+      <div class="param">permission </div><div class="param-desc"><span class="param-type"><a href="#channel_permission">channel_permission</a></span>  </div>
+<div class="param">setting </div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1227,46 +1225,46 @@
   </div>
   <div class="model">
     <h3><a name="hub"><code>hub</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>Represents a channel in a WICRS server</div>
+    <div class='model-description'>Represents a hub in a WICRS server</div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub </div>
-<div class="param">owner (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that owns the hub </div>
-<div class="param">bans (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been banned from the hub </div>
-<div class="param">default_group (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the permission group assigned to new members </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
-<div class="param">members (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_members">map[String, hub_members]</a></span> Members of the hub </div>
-<div class="param">groups (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_groups">map[String, hub_groups]</a></span> Permission groups that belong to this hub </div>
-<div class="param">channels (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_channels">map[String, hub_channels]</a></span> Channels in the hub </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub </div>
+<div class="param">owner </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that owns the hub </div>
+<div class="param">bans </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been banned from the hub </div>
+<div class="param">default_group </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the permission group assigned to new members </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
+<div class="param">members </div><div class="param-desc"><span class="param-type"><a href="#hub_members">map[String, hub_members]</a></span> Members of the hub </div>
+<div class="param">groups </div><div class="param-desc"><span class="param-type"><a href="#hub_groups">map[String, hub_groups]</a></span> Permission groups that belong to this hub </div>
+<div class="param">channels </div><div class="param-desc"><span class="param-type"><a href="#hub_channels">map[String, hub_channels]</a></span> Channels in the hub </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="hub_channels"><code>hub_channels</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the channel </div>
-<div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel">channel</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the channel </div>
+<div class="param">channel </div><div class="param-desc"><span class="param-type"><a href="#channel">channel</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="hub_groups"><code>hub_groups</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the group </div>
-<div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#permission_group">permission_group</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> UUID of the group </div>
+<div class="param">group </div><div class="param-desc"><span class="param-type"><a href="#permission_group">permission_group</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="hub_member"><code>hub_member</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">account (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
-<div class="param">joined (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">hub (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub this member is from </div>
-<div class="param">nickname (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span> Name used by the member when in this hub </div>
-<div class="param">groups (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> UUIDs of the permission groups this member is part of </div>
-<div class="param">hub_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
-<div class="param">channel_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
+      <div class="param">account </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
+<div class="param">joined </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">hub </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub this member is from </div>
+<div class="param">nickname </div><div class="param-desc"><span class="param-type"><a href="#"></a></span> Name used by the member when in this hub </div>
+<div class="param">groups </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> UUIDs of the permission groups this member is part of </div>
+<div class="param">hub_permissions </div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
+<div class="param">channel_permissions </div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1293,19 +1291,19 @@
     <h3><a name="hub_permission_map_item"><code>hub_permission_map_item</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Hub permission and it&#x27;s current setting</div>
     <div class="field-items">
-      <div class="param">permission (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_permission">hub_permission</a></span>  </div>
-<div class="param">setting (optional)</div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
+      <div class="param">permission </div><div class="param-desc"><span class="param-type"><a href="#hub_permission">hub_permission</a></span>  </div>
+<div class="param">setting </div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="inline_response_400"><code>inline_response_400</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>String format information</div>
     <div class="field-items">
-      <div class="param">allowed_chars (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Characters that are allowed to be used in the string </div>
+      <div class="param">allowed_chars </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Characters that are allowed to be used in the string </div>
           <div class="param-desc"><span class="param-type">example: ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz-_.0123456789</span></div>
-<div class="param">max_chars (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Maximum length of the string in characters </div>
+<div class="param">max_chars </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Maximum length of the string in characters </div>
           <div class="param-desc"><span class="param-type">example: 32</span></div>
-<div class="param">min_chars (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minimum length of the string in characters </div>
+<div class="param">min_chars </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minimum length of the string in characters </div>
           <div class="param-desc"><span class="param-type">example: 1</span></div>
     </div>  <!-- field-items -->
   </div>
@@ -1313,10 +1311,10 @@
     <h3><a name="permission_group"><code>permission_group</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Represents a group of permissions that can be given to any member of a hub the hub the group is in</div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub the group is in </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">hub_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
-<div class="param">channel_permissions (optional)</div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub the group is in </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">hub_permissions </div><div class="param-desc"><span class="param-type"><a href="#hub_permission_map">hub_permission_map</a></span>  </div>
+<div class="param">channel_permissions </div><div class="param-desc"><span class="param-type"><a href="#channel_permission_map">channel_permission_map</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1326,43 +1324,23 @@
           </div>  <!-- field-items -->
   </div>
   <div class="model">
-    <h3><a name="stripped_account"><code>stripped_account</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>An account with some information removed/hidden to allow anyone to view the account without compromising the holder&#x27;s privacy</div>
-    <div class="field-items">
-      <div class="param">account_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account </div>
-<div class="param">username (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Username of the account </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">parent_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user that owns the account </div>
-<div class="param">is_bot (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the account is dedicated to automated tasks/bot work </div>
-<div class="param">in_hubs (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of SHA256 hashes of the IDs of hubs the account is a member of </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="stripped_account_map_item"><code>stripped_account_map_item</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">account (optional)</div><div class="param-desc"><span class="param-type"><a href="#stripped_account">stripped_account</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
     <h3><a name="stripped_user"><code>stripped_user</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A user with some information removed/hidden to allow anyone to recognise them without compromising their privacy</div>
     <div class="field-items">
-      <div class="param">user_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">accounts (optional)</div><div class="param-desc"><span class="param-type"><a href="#stripped_account_map_item">map[String, stripped_account_map_item]</a></span> A list of the accounts the user owns </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">accounts </div><div class="param-desc"><span class="param-type"><a href="#account_map_item">map[String, account_map_item]</a></span> A list of the accounts the user owns </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="user"><code>user</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Represents a user of WICRS</div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
-<div class="param">oauth_service (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the OAuth2 service the user used to sign up </div>
-<div class="param">created (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The primary email of the account the user used for their chosen OAuth2 service </div>
-<div class="param">accounts (optional)</div><div class="param-desc"><span class="param-type"><a href="#account_map_item">map[String, account_map_item]</a></span> A list of the accounts the user owns </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
+<div class="param">oauth_service </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the OAuth2 service the user used to sign up </div>
+<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
+<div class="param">email </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The primary email of the account the user used for their chosen OAuth2 service </div>
+<div class="param">accounts </div><div class="param-desc"><span class="param-type"><a href="#account_map_item">map[String, account_map_item]</a></span> A list of the accounts the user owns </div>
     </div>  <!-- field-items -->
   </div>
   </body>
