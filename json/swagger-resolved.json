@@ -940,6 +940,7 @@
             "description" : "UUID of the hub this member is from"
           },
           "nickname" : {
+            "type" : "string",
             "description" : "Name used by the member when in this hub"
           },
           "groups" : {
@@ -1174,6 +1175,7 @@
         "type" : "object",
         "properties" : {
           "id" : {
+            "type" : "string",
             "description" : "UUID of the account this member represents"
           },
           "group" : {
@@ -1186,6 +1188,7 @@
         "type" : "object",
         "properties" : {
           "id" : {
+            "type" : "string",
             "description" : "UUID of the group"
           },
           "group" : {
@@ -1198,6 +1201,7 @@
         "type" : "object",
         "properties" : {
           "id" : {
+            "type" : "string",
             "description" : "UUID of the channel"
           },
           "channel" : {
