@@ -31,6 +31,9 @@
     "name" : "account",
     "description" : "Operations related to accounts owned by users"
   }, {
+    "name" : "hub_member",
+    "description" : "Operations related to members of hubs"
+  }, {
     "name" : "hub",
     "description" : "Operations related to hubs"
   }, {
@@ -174,15 +177,15 @@
         }
       }
     },
-    "/user/account/{accountId}/delete" : {
+    "/user/account/{account_id}/delete" : {
       "delete" : {
         "tags" : [ "account" ],
         "description" : "Delete one of the authenticated user's accounts",
         "operationId" : "userAccountDelete",
         "parameters" : [ {
-          "name" : "accountId",
+          "name" : "account_id",
           "in" : "path",
-          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "description" : "UUID of the account to perform the operation on",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -195,7 +198,7 @@
             "description" : "Account deletion success"
           },
           "404" : {
-            "description" : "User does not have an account with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "401" : {
             "description" : "Authentication information is missing or invalid",
@@ -211,15 +214,15 @@
         }
       }
     },
-    "/user/account/{accountId}/rename" : {
+    "/user/account/{account_id}/rename" : {
       "put" : {
         "tags" : [ "account" ],
         "description" : "Change the username of one of the authenticated user's accounts",
         "operationId" : "userAccountRename",
         "parameters" : [ {
-          "name" : "accountId",
+          "name" : "account_id",
           "in" : "path",
-          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "description" : "UUID of the account to perform the operation on",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -251,7 +254,7 @@
             }
           },
           "404" : {
-            "description" : "User does not have an account with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "400" : {
             "description" : "Information on the constraints for a string",
@@ -277,15 +280,15 @@
         }
       }
     },
-    "/user/account/{accountId}" : {
+    "/user/account/{account_id}" : {
       "get" : {
         "tags" : [ "account" ],
         "description" : "Get the information of one of the currently authenticated user's accounts",
         "operationId" : "userAccountGet",
         "parameters" : [ {
-          "name" : "accountId",
+          "name" : "account_id",
           "in" : "path",
-          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "description" : "UUID of the account to perform the operation on",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -305,7 +308,7 @@
             }
           },
           "404" : {
-            "description" : "No account with that ID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "401" : {
             "description" : "Authentication information is missing or invalid",
@@ -321,13 +324,13 @@
         }
       }
     },
-    "/user/{userId}/account/{accountId}" : {
+    "/user/{user_id}/account/{account_id}" : {
       "get" : {
         "tags" : [ "account" ],
         "description" : "Get the public information of a user's account",
         "operationId" : "userAccountGetOther",
         "parameters" : [ {
-          "name" : "userId",
+          "name" : "user_id",
           "in" : "path",
           "description" : "ID of the user who owns the account being requested",
           "required" : true,
@@ -337,9 +340,9 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
+          "name" : "account_id",
           "in" : "path",
-          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "description" : "UUID of the account to perform the operation on",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -359,7 +362,7 @@
             }
           },
           "404" : {
-            "description" : "User with that ID does not exist or they do not own an account with that ID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           }
         }
       }
@@ -370,12 +373,12 @@
         "description" : "Create a new hub owned by the authenticated user",
         "operationId" : "hubCreate",
         "parameters" : [ {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -418,13 +421,13 @@
         }
       }
     },
-    "/hub/{hubId}" : {
+    "/hub/{hub_id}" : {
       "get" : {
         "tags" : [ "hub" ],
         "description" : "Get a hub",
         "operationId" : "hubGet",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -434,12 +437,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -456,7 +459,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "401" : {
             "description" : "Authentication information is missing or invalid",
@@ -472,13 +475,13 @@
         }
       }
     },
-    "/hub/delete/{hubId}" : {
+    "/hub/delete/{hub_id}" : {
       "delete" : {
         "tags" : [ "hub" ],
         "description" : "Delete a hub",
         "operationId" : "hubDelete",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -488,12 +491,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -503,7 +506,7 @@
             "description" : "Hub deletion success"
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "401" : {
             "description" : "Authentication information is missing or invalid",
@@ -519,13 +522,13 @@
         }
       }
     },
-    "/hub/rename/{hubId}" : {
+    "/hub/rename/{hub_id}" : {
       "put" : {
         "tags" : [ "hub" ],
         "description" : "Rename a hub",
         "operationId" : "hubRename",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -545,12 +548,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -569,7 +572,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "400" : {
             "description" : "Information on the constraints for a string",
@@ -595,13 +598,459 @@
         }
       }
     },
-    "/channel/create/{hubId}/{name}" : {
+    "/member/{hub_id}/{account_id}" : {
+      "get" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Get information on a member of a hub",
+        "operationId" : "hubMemberGet",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Hub member get success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/hub_member"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{hub_id}/{account_id}/ban" : {
+      "post" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Ban an account from a hub, also bans all other accounts owned by account parent user",
+        "operationId" : "hubBanAccount",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "time",
+          "in" : "query",
+          "description" : "How long the account should stay banned in milliseconds, 0 means infinite",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Account ban success"
+          },
+          "403" : {
+            "description" : "Account does not have permission to ban accounts in that hub"
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{hub_id}/{account_id}/unban" : {
+      "post" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Unban an account from a hub, also unbans all other accounts owned by account parent user",
+        "operationId" : "hubUnbanAccount",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Account unban success"
+          },
+          "403" : {
+            "description" : "Account does not have permission to unban accounts in that hub"
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{hub_id}/{account_id}/kick" : {
+      "post" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Kick an account from a hub, also kicks all other accounts owned by account parent user",
+        "operationId" : "hubKickAccount",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Account kick success"
+          },
+          "403" : {
+            "description" : "Account does not have permission to kick accounts in that hub"
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{hub_id}/{account_id}/mute" : {
+      "post" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Mute an account in a hub, also mutes all other accounts owned by account parent user",
+        "operationId" : "hubMuteAccount",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "time",
+          "in" : "query",
+          "description" : "How long the account should stay muted in milliseconds, 0 means infinite",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Account mute success"
+          },
+          "403" : {
+            "description" : "Account does not have permission to mute accounts in that hub"
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{hub_id}/{account_id}/unmute" : {
+      "post" : {
+        "tags" : [ "hub_member" ],
+        "description" : "Unmute an account in a hub, also unmutes all other accounts owned by account parent user",
+        "operationId" : "hubUnmuteAccount",
+        "parameters" : [ {
+          "name" : "hub_id",
+          "in" : "path",
+          "description" : "UUID of a hub",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "account_id",
+          "in" : "path",
+          "description" : "UUID of the account to perform the operation on",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "access_account_id",
+          "in" : "query",
+          "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Account unmute success"
+          },
+          "403" : {
+            "description" : "Account does not have permission to unmute accounts in that hub"
+          },
+          "404" : {
+            "description" : "Resource does not exist or account does not have permission to access it"
+          },
+          "400" : {
+            "description" : "Information on the constraints for a string",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication information is missing or invalid",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "Authentication information is missing or invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/create/{hub_id}/{name}" : {
       "post" : {
         "tags" : [ "channel" ],
         "description" : "Create a new channel in a hub",
         "operationId" : "hubChannelCreate",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -621,12 +1070,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -644,7 +1093,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to create channels in that hub"
@@ -673,13 +1122,13 @@
         }
       }
     },
-    "/channel/rename/{hubId}/{channelId}" : {
+    "/channel/rename/{hub_id}/{channel_id}" : {
       "put" : {
         "tags" : [ "channel" ],
         "description" : "Create a new channel in a hub",
         "operationId" : "hubChannelRename",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -689,7 +1138,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -709,12 +1158,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -732,7 +1181,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel does not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to rename that channel"
@@ -761,13 +1210,13 @@
         }
       }
     },
-    "/channel/delete/{hubId}/{channelId}" : {
+    "/channel/delete/{hub_id}/{channel_id}" : {
       "delete" : {
         "tags" : [ "channel" ],
         "description" : "Delete a channel in a hub",
         "operationId" : "hubChannelDelete",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -777,7 +1226,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -787,12 +1236,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -810,7 +1259,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel does not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to delete that channel"
@@ -829,13 +1278,13 @@
         }
       }
     },
-    "/channel/{hubId}/{channelId}" : {
+    "/channel/{hub_id}/{channel_id}" : {
       "get" : {
         "tags" : [ "channel" ],
         "description" : "Get channel metadata",
         "operationId" : "hubChannelGet",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -845,7 +1294,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -855,12 +1304,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -877,7 +1326,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel does not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "401" : {
             "description" : "Authentication information is missing or invalid",
@@ -893,13 +1342,13 @@
         }
       }
     },
-    "/channel/{hubId}/{channelId}/delete_all_of" : {
+    "/channel/{hub_id}/{channel_id}/delete_all_of" : {
       "get" : {
         "tags" : [ "message" ],
         "description" : "Search for messages in the a channel",
         "operationId" : "hubChannelDeleteMessages",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -909,7 +1358,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -919,12 +1368,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -962,7 +1411,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to view messages in that channel"
@@ -981,13 +1430,13 @@
         }
       }
     },
-    "/channel/{hubId}/{channelId}/search_for/{term}" : {
+    "/channel/{hub_id}/{channel_id}/search_for/{term}" : {
       "get" : {
         "tags" : [ "message" ],
         "description" : "Search for messages in the a channel",
         "operationId" : "hubChannelSearchMessages",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -997,7 +1446,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1007,12 +1456,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -1056,7 +1505,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to view messages in that channel"
@@ -1075,13 +1524,13 @@
         }
       }
     },
-    "/channel/{hubId}/{channelId}/last_messages" : {
+    "/channel/{hub_id}/{channel_id}/last_messages" : {
       "get" : {
         "tags" : [ "message" ],
         "description" : "Send a message in a channel",
         "operationId" : "hubChannelGetLastNMessages",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -1091,7 +1540,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1101,12 +1550,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -1150,7 +1599,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to view messages in that channel"
@@ -1169,13 +1618,13 @@
         }
       }
     },
-    "/channel/{hubId}/{channelId}/send_message" : {
+    "/channel/{hub_id}/{channel_id}/send_message" : {
       "post" : {
         "tags" : [ "message" ],
         "description" : "Send a message in a channel",
         "operationId" : "hubChannelSendMessage",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -1185,7 +1634,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1195,12 +1644,12 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
@@ -1228,7 +1677,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to send messages in that channel"
@@ -1247,13 +1696,13 @@
         }
       }
     },
-    "/message/{hubId}/{channelId}/{messageId}" : {
+    "/message/{hub_id}/{channel_id}/{message_id}" : {
       "get" : {
         "tags" : [ "message" ],
         "description" : "Get a message from a channel by it's ID",
         "operationId" : "hubChannelGetMessage",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -1263,7 +1712,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1273,17 +1722,17 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
         }, {
-          "name" : "messageId",
+          "name" : "message_id",
           "in" : "path",
           "description" : "UUID of a message in the channel",
           "required" : true,
@@ -1305,7 +1754,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to read messages in that channel"
@@ -1328,7 +1777,7 @@
         "description" : "Edit a message in a channel",
         "operationId" : "hubChannelEditMessage",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -1338,7 +1787,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1348,17 +1797,17 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
         }, {
-          "name" : "messageId",
+          "name" : "message_id",
           "in" : "path",
           "description" : "UUID of a message in the channel",
           "required" : true,
@@ -1390,7 +1839,7 @@
             }
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account did not send that message in the channel"
@@ -1413,7 +1862,7 @@
         "description" : "Delete a message from a channel",
         "operationId" : "hubChannelDeleteMessage",
         "parameters" : [ {
-          "name" : "hubId",
+          "name" : "hub_id",
           "in" : "path",
           "description" : "UUID of a hub",
           "required" : true,
@@ -1423,7 +1872,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "channelId",
+          "name" : "channel_id",
           "in" : "path",
           "description" : "UUID of a channel in the hub",
           "required" : true,
@@ -1433,17 +1882,17 @@
             "type" : "string"
           }
         }, {
-          "name" : "accountId",
-          "in" : "path",
+          "name" : "access_account_id",
+          "in" : "query",
           "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "string"
           }
         }, {
-          "name" : "messageId",
+          "name" : "message_id",
           "in" : "path",
           "description" : "UUID of a message in the channel",
           "required" : true,
@@ -1458,7 +1907,7 @@
             "description" : "Deletion success"
           },
           "404" : {
-            "description" : "Account does not have access to a hub with that UUID or the channel or they do not exist"
+            "description" : "Resource does not exist or account does not have permission to access it"
           },
           "403" : {
             "description" : "Account does not have permission to delete messages in that channel"
@@ -1855,6 +2304,9 @@
       }
     },
     "responses" : {
+      "not_found" : {
+        "description" : "Resource does not exist or account does not have permission to access it"
+      },
       "unauthorized_error" : {
         "description" : "Authentication information is missing or invalid",
         "content" : {
@@ -1919,7 +2371,7 @@
     },
     "parameters" : {
       "hub_id" : {
-        "name" : "hubId",
+        "name" : "hub_id",
         "in" : "path",
         "description" : "UUID of a hub",
         "required" : true,
@@ -1930,7 +2382,7 @@
         }
       },
       "channel_id" : {
-        "name" : "channelId",
+        "name" : "channel_id",
         "in" : "path",
         "description" : "UUID of a channel in the hub",
         "required" : true,
@@ -1941,9 +2393,9 @@
         }
       },
       "account_id" : {
-        "name" : "accountId",
+        "name" : "account_id",
         "in" : "path",
-        "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+        "description" : "UUID of the account to perform the operation on",
         "required" : true,
         "style" : "simple",
         "explode" : false,
@@ -1951,8 +2403,19 @@
           "type" : "string"
         }
       },
+      "access_account_id" : {
+        "name" : "access_account_id",
+        "in" : "query",
+        "description" : "UUID of an account that has the necessary permissions and access to the hub and channel",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
       "message_id" : {
-        "name" : "messageId",
+        "name" : "message_id",
         "in" : "path",
         "description" : "UUID of a message in the channel",
         "required" : true,
@@ -1960,6 +2423,47 @@
         "explode" : false,
         "schema" : {
           "type" : "string"
+        }
+      },
+      "group_id" : {
+        "name" : "groupId",
+        "in" : "path",
+        "description" : "UUID of a permission group",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "hub_permission" : {
+        "name" : "hub_permission",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/hub_permission"
+        }
+      },
+      "channel_permission" : {
+        "name" : "channel_permission",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/channel_permission"
+        }
+      },
+      "permission_setting" : {
+        "name" : "permission_setting",
+        "in" : "query",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "$ref" : "#/components/schemas/permission_setting"
         }
       }
     },
