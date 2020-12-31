@@ -19,6 +19,35 @@ components:
     user_token_auth:
       type: http
       scheme: basic
+  parameters:
+    hub_id:
+      name: hubId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: UUID of a hub
+    channel_id:
+      name: channelId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: UUID of a channel in the hub
+    account_id:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: UUID of an account that has the necessary permissions and access to the hub and channel
+    message_id:
+      name: messageId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: UUID of a message in the channel
   responses:
     unauthorized_error:
       description: Authentication information is missing or invalid
@@ -392,17 +421,12 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - account
-  '/user/account/{id}/delete':
+  '/user/account/{accountId}/delete':
     delete:
       description: Delete one of the authenticated user's accounts
       operationId: userAccountDelete
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the account to delete
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Account deletion success
@@ -412,17 +436,12 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - account
-  '/user/account/{id}/rename':
+  '/user/account/{accountId}/rename':
     put:
       description: Change the username of one of the authenticated user's accounts
       operationId: userAccountRename
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the account to rename
+        - $ref: '#/components/parameters/account_id'
         - name: new_name
           in: query
           required: true
@@ -446,17 +465,12 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - account
-  '/user/account/{id}':
+  '/user/account/{accountId}':
     get:
       description: Get the information of one of the currently authenticated user's accounts
       operationId: userAccountGet
       parameters: 
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID of the account
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           $ref: '#/components/responses/stripped_user'
@@ -477,12 +491,7 @@ paths:
           schema:
             type: string
           description: ID of the user who owns the account being requested
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID of the account being requested
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           $ref: '#/components/responses/stripped_user'
@@ -495,12 +504,7 @@ paths:
       description: Create a new hub owned by the authenticated user
       operationId: hubCreate
       parameters:
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the account that will have ownership of the hub
+        - $ref: '#/components/parameters/account_id'
         - name: name
           in: path
           required: true
@@ -516,23 +520,13 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
-  '/hub/{id}':
+  '/hub/{hubId}':
     get:
       description: Get a hub
       operationId: hubGet
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub to be delete
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that is a member of the hub
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Hub info
@@ -546,23 +540,13 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
-  '/hub/delete/{id}':
+  '/hub/delete/{hubId}':
     delete:
       description: Delete a hub
       operationId: hubDelete
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub to be delete
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the account that owns the hub
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Hub deletion success
@@ -572,29 +556,19 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
-  '/hub/rename/{id}':
+  '/hub/rename/{hubId}':
     put:
       description: Rename a hub
       operationId: hubRename
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub to be delete
+        - $ref: '#/components/parameters/hub_id'
         - name: new_name
           in: query
           required: true
           schema:
             type: string
           description: The new name for the hub
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the account that owns the hub
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Hub deletion success
@@ -612,29 +586,19 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
-  '/channel/create/{id}/{name}':
+  '/channel/create/{hubId}/{name}':
     post: 
       description: Create a new channel in a hub
       operationId: hubChannelCreate
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel should be created in
+        - $ref: '#/components/parameters/hub_id'
         - name: name
           in: path
           required: true
           schema:
             type: string
           description: Name of the channel
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to create channels in the hub
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Channel creation success
@@ -658,30 +622,15 @@ paths:
       description: Create a new channel in a hub
       operationId: hubChannelRename
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel to be renamed is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the channel to be renamed
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
         - name: new_name
           in: query
           required: true
           schema:
             type: string
           description: New name for the channel
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to rename the channel
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Channel rename success
@@ -705,23 +654,9 @@ paths:
       description: Delete a channel in a hub
       operationId: hubChannelDelete
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel to be renamed is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to delete the channel
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Channel deletion success
@@ -743,23 +678,9 @@ paths:
       description: Get channel metadata
       operationId: hubChannelGet
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel to be renamed is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to view the channel
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
       responses:
         200:
           description: Channel get success
@@ -773,29 +694,129 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - channel
-  '/channel/{hubId}/{channelId}/message':
+  '/channel/{hubId}/{channelId}/delete_all_of':
+    get: 
+      description: Search for messages in the a channel
+      operationId: hubChannelDeleteMessages
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - name: messages
+          in: query
+          required: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: Array of the UUIDs of messages to delete
+      responses:
+        200:
+          description: Got messages successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array containing all messages found
+                items:
+                  $ref: '#/components/schemas/message'
+        404:
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
+        403:
+          description: Account does not have permission to view messages in that channel
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - message
+  '/channel/{hubId}/{channelId}/search_for/{term}':
+    get: 
+      description: Search for messages in the a channel
+      operationId: hubChannelSearchMessages
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - name: term
+          in: path
+          required: true
+          schema:
+            type: string
+          description: String to search for
+        - name: max
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 128
+            maximum: 1024
+          description: Maximum number of results
+      responses:
+        200:
+          description: Got messages successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array containing all messages found
+                items:
+                  $ref: '#/components/schemas/message'
+        404:
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
+        403:
+          description: Account does not have permission to view messages in that channel
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - message
+  '/channel/{hubId}/{channelId}/last_messages':
+    get: 
+      description: Send a message in a channel
+      operationId: hubChannelGetLastNMessages
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - name: count
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 128
+            maximum: 1024
+          description: Number of messages to get
+        - name: from
+          in: query
+          schema:
+            type: string
+          description: Message to start getting messages from, if empty starts from last message sent in channel
+      responses:
+        200:
+          description: Got messages successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array containing the number of messages requested or less if the channel did not have enough
+                items:
+                  $ref: '#/components/schemas/message'
+        404:
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
+        403:
+          description: Account does not have permission to view messages in that channel
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - message
+  '/channel/{hubId}/{channelId}/send_message':
     post: 
       description: Send a message in a channel
       operationId: hubChannelSendMessage
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel the message is to be sent is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the channel the message is to be sent in
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to send messages in the channel
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
         - name: message
           in: query
           required: true
@@ -811,40 +832,22 @@ paths:
                 type: string
                 description: UUID of the message
         404:
-          description: Account does not have access to a hub with that UUID or the channel does not exist
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
         403:
           description: Account does not have permission to send messages in that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - message
+  '/message/{hubId}/{channelId}/{messageId}':
     get: 
       description: Get a message from a channel by it's ID
       operationId: hubChannelGetMessage
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel that the message is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to view the channel
-        - name: messageId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the message to get
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - $ref: '#/components/parameters/message_id'
       responses:
         200:
           description: Message get success
@@ -853,7 +856,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/message'
         404:
-          description: Account does not have access to a hub with that UUID or the channel does not exist
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
         403:
           description: Account does not have permission to read messages in that channel
         401:
@@ -864,30 +867,10 @@ paths:
       description: Edit a message in a channel
       operationId: hubChannelEditMessage
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel that the message to be edited is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the channel the message is in
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the account that sent the message
-        - name: messageId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the message to edit
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - $ref: '#/components/parameters/message_id'
         - name: newContent
           in: query
           required: true
@@ -902,7 +885,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/message'
         404:
-          description: Account does not have access to a hub with that UUID or the channel does not exist
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
         403:
           description: Account did not send that message in the channel
         401:
@@ -913,35 +896,15 @@ paths:
       description: Delete a message from a channel
       operationId: hubChannelDeleteMessage
       parameters:
-        - name: hubId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID of the hub the channel the message is in
-        - name: channelId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: UUID the channel the message is in
-        - name: accountId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of an account that has permission to delete messages in the channel
-        - name: messageId
-          in: query
-          required: true
-          schema:
-            type: string
-          description: UUID of the message to delete
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/channel_id'
+        - $ref: '#/components/parameters/account_id'
+        - $ref: '#/components/parameters/message_id'
       responses:
         200:
           description: Deletion success
         404:
-          description: Account does not have access to a hub with that UUID or the channel does not exist
+          description: Account does not have access to a hub with that UUID or the channel or they do not exist
         403:
           description: Account does not have permission to delete messages in that channel
         401:
@@ -950,12 +913,14 @@ paths:
         - message
 tags:
   - name: user
-    description: Operations performed on users
+    description: Operations related to users
+  - name: group
+    description: Operations related to permission groups
   - name: account
-    description: Operations performed on accounts owned by users
+    description: Operations related to accounts owned by users
   - name: hub
-    description: Operations performed on hubs
+    description: Operations related to hubs
   - name: channel
-    description: Operations performed on channels in hubs
+    description: Operations related to channels in hubs
   - name: message
-    description: Operations performed on messages
+    description: Operations related to messages
