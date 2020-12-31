@@ -96,11 +96,9 @@ components:
         type: object
         properties:
           channel_id:
-            $ref: '#/components/schemas/channel_permission'
+            type: string
           permissions:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/channel_permission_map_item'
+            $ref: '#/components/schemas/channel_permission_map_item'
     channel_permission_map_item:
       description: Channel permission and it's current setting
       type: object
@@ -120,6 +118,28 @@ components:
     date:
       description: Time in milliseconds from 1 Jan 1970
       type: integer
+    hub_member:
+      type: object
+      properties:
+        account:
+          description: UUID of the account this member represents
+          type: string
+        joined:
+          $ref: '#/components/schemas/date'
+        hub:
+          description: UUID of the hub this member is from
+          type: string
+        nickname:
+          description: Name used by the member when in this hub
+        groups:
+          description: UUIDs of the permission groups this member is part of
+          type: array
+          items:
+            type: string
+        hub_permissions:
+          $ref: '#/components/schemas/hub_permission_map'
+        channel_permissions:
+          $ref: '#/components/schemas/channel_permission_map'
     hub:
       description: Represents a channel in a WICRS server
       type: object
@@ -127,11 +147,52 @@ components:
         id:
           description: UUID of the hub
           type: string
+        owner:
+          description: UUID of the account that owns the hub
+          type: string
+        bans:
+          description: List of IDs of users that have been banned from the hub
+          type: array
+          items:
+            type: string
+        default_group:
+          description: UUID of the permission group assigned to new members
+          type: string
         created:
           $ref: '#/components/schemas/date'
         name:
           description: Name of the channel
           type: string
+        members:
+          description: Members of the hub
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                description: UUID of the account this member represents
+              group:
+                $ref: '#/components/schemas/hub_member'
+        groups:
+          description: Permission groups that belong to this hub
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                description: UUID of the group
+              group:
+                $ref: '#/components/schemas/permission_group'
+        channels:
+          description: Channels in the hub
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                description: UUID of the channel
+              group:
+                $ref: '#/components/schemas/channel'
     permission_group:
       description: Represents a group of permissions that can be given to any member of a hub the hub the group is in
       type: object
@@ -423,7 +484,36 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
-  '/hub/delete{id}':
+  '/hub/{id}':
+    get:
+      description: Get a hub
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the hub to be delete
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: UUID of an account that is a member of the hub
+      responses:
+        200:
+          description: Hub info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hub'
+        404:
+          description: Account does not have access to a hub with that UUID
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - hub
+  '/hub/delete/{id}':
     delete:
       description: Delete a hub
       parameters:
@@ -633,12 +723,11 @@ paths:
           description: UUID of an account that has permission to view the channel
       responses:
         200:
-          description: Channel deletion success
+          description: Channel info
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                description: The name of the deleted channel
+                $ref: '#/components/schemas/channel'
         404:
           description: Account does not have access to a hub with that UUID or the channel does not exist
         403:
