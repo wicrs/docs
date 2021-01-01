@@ -220,6 +220,11 @@ components:
         owner:
           description: UUID of the account that owns the hub
           type: string
+        mutes:
+          description: List of IDs of users that have been muted in the hub
+          type: array
+          items:
+            type: string
         bans:
           description: List of IDs of users that have been banned from the hub
           type: array
@@ -605,6 +610,52 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - hub
+  '/hub/{hub_id}/is_banned/{account_id}':
+    get:
+      description: Check if an account is banned from a hub
+      operationId: hubBanCheck
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/account_id'
+        - $ref: '#/components/parameters/access_account_id'
+      responses:
+        200:
+          description: Account ban status
+          content:
+            text/plain:
+              schema:
+                type: boolean
+        404:
+          $ref: '#/components/responses/not_found'
+        400:
+          $ref: '#/components/responses/string_constraints'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - hub
+  '/hub/{hub_id}/is_muted/{account_id}':
+    get:
+      description: Check if an account is muted in a hub
+      operationId: hubMuteCheck
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+        - $ref: '#/components/parameters/account_id'
+        - $ref: '#/components/parameters/access_account_id'
+      responses:
+        200:
+          description: Account mute status
+          content:
+            text/plain:
+              schema:
+                type: boolean
+        404:
+          $ref: '#/components/responses/not_found'
+        400:
+          $ref: '#/components/responses/string_constraints'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      tags:
+        - hub
   '/member/{hub_id}/{account_id}':
     get:
       description: Get information on a member of a hub
@@ -627,7 +678,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/member/{hub_id}/{account_id}/ban':
     post:
       description: Ban an account from a hub, also bans all other accounts owned by account parent user
@@ -654,7 +705,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/member/{hub_id}/{account_id}/unban':
     post:
       description: Unban an account from a hub, also unbans all other accounts owned by account parent user
@@ -675,7 +726,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/member/{hub_id}/{account_id}/kick':
     post:
       description: Kick an account from a hub, also kicks all other accounts owned by account parent user
@@ -696,7 +747,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/member/{hub_id}/{account_id}/mute':
     post:
       description: Mute an account in a hub, also mutes all other accounts owned by account parent user
@@ -723,7 +774,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/member/{hub_id}/{account_id}/unmute':
     post:
       description: Unmute an account in a hub, also unmutes all other accounts owned by account parent user
@@ -744,7 +795,7 @@ paths:
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
-        - hub_member
+        - hub
   '/channel/create/{hub_id}/{name}':
     post: 
       description: Create a new channel in a hub
@@ -853,42 +904,6 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - channel
-  '/channel/{hub_id}/{channel_id}/delete_all_of':
-    get: 
-      description: Search for messages in the a channel
-      operationId: hubChannelDeleteMessages
-      parameters:
-        - $ref: '#/components/parameters/hub_id'
-        - $ref: '#/components/parameters/channel_id'
-        - $ref: '#/components/parameters/access_account_id'
-        - name: messages
-          in: query
-          required: true
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-          description: Array of the UUIDs of messages to delete
-      responses:
-        200:
-          description: Got messages successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                description: Array containing all messages found
-                items:
-                  $ref: '#/components/schemas/message'
-        404:
-          $ref: '#/components/responses/not_found'
-        403:
-          description: Account does not have permission to view messages in that channel
-        401:
-          $ref: '#/components/responses/unauthorized_error'
-      tags:
-        - message
   '/channel/{hub_id}/{channel_id}/search_for/{term}':
     get: 
       description: Search for messages in the a channel
@@ -1022,54 +1037,6 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
       tags:
         - message
-    put: 
-      description: Edit a message in a channel
-      operationId: hubChannelEditMessage
-      parameters:
-        - $ref: '#/components/parameters/hub_id'
-        - $ref: '#/components/parameters/channel_id'
-        - $ref: '#/components/parameters/access_account_id'
-        - $ref: '#/components/parameters/message_id'
-        - name: newContent
-          in: query
-          required: true
-          schema:
-            type: string
-          description: New contents of the message
-      responses:
-        200:
-          description: Edit success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/message'
-        404:
-          $ref: '#/components/responses/not_found'
-        403:
-          description: Account did not send that message in the channel
-        401:
-          $ref: '#/components/responses/unauthorized_error'
-      tags:
-        - message
-    delete: 
-      description: Delete a message from a channel
-      operationId: hubChannelDeleteMessage
-      parameters:
-        - $ref: '#/components/parameters/hub_id'
-        - $ref: '#/components/parameters/channel_id'
-        - $ref: '#/components/parameters/access_account_id'
-        - $ref: '#/components/parameters/message_id'
-      responses:
-        200:
-          description: Deletion success
-        404:
-          $ref: '#/components/responses/not_found'
-        403:
-          description: Account does not have permission to delete messages in that channel
-        401:
-          $ref: '#/components/responses/unauthorized_error'
-      tags:
-        - message
 tags:
   - name: user
     description: Operations related to users
@@ -1077,8 +1044,6 @@ tags:
     description: Operations related to permission groups
   - name: account
     description: Operations related to accounts owned by users
-  - name: hub_member
-    description: Operations related to members of hubs
   - name: hub
     description: Operations related to hubs
   - name: channel
