@@ -398,7 +398,7 @@ paths:
       tags:
         - user
     delete:
-      description: Get the information of the authenticated user
+      description: Delete the authenticated user
       operationId: userDelete
       responses:
         200:
