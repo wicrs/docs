@@ -11,11 +11,15 @@ info:
     url: https://github.com/wicrs/docs/blob/master/LICENSE
   version: 1.0.0
 servers:
+- url: http://localhost:8080/v2
+  description: Local testing environement
 - url: https://virtserver.swaggerhub.com/wicrs/wicrs/1.0.0
   description: SwaggerHub API Auto Mocking
 security:
 - user_token_auth: []
 tags:
+- name: auth
+  description: Operations related to authentication
 - name: user
   description: Operations related to users
 - name: group
@@ -29,6 +33,78 @@ tags:
 - name: message
   description: Operations related to messages
 paths:
+  /login/{service}:
+    get:
+      tags:
+      - auth
+      description: Start the OAuth login sequence
+      operationId: oauthStart
+      parameters:
+      - name: service
+        in: path
+        description: OAuth service to use
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          enum:
+          - GitHub
+      responses:
+        "302":
+          description: Redirect to the chosen OAuth service's API.
+  /auth/{service}:
+    get:
+      tags:
+      - auth
+      description: Finish the OAuth login sequence
+      operationId: oauthFinish
+      parameters:
+      - name: code
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: state
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: service
+        in: path
+        description: OAuth service used in the oauthStart step
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          enum:
+          - GitHub
+      responses:
+        "200":
+          description: Authentication success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Invalid state/code pair given
+  /invalidate_tokens:
+    post:
+      tags:
+      - auth
+      description: Invalidate all authentication tokens for the authenticated user.
+      operationId: invalidateTokes
+      responses:
+        "200":
+          description: Successfully invalidated all authentication tokens for the
+            authenticated user.
+        "403":
+          description: Not authenticated correctly
   /user:
     get:
       tags:
@@ -101,6 +177,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "500":
+          description: Failed to save new account data.
   /user/account/{account_id}/delete:
     delete:
       tags:
@@ -131,6 +209,8 @@ paths:
                 example: Authentication information is missing or invalid
         "400":
           description: Malformed request.
+        "500":
+          description: Unable to remove the account.
   /user/account/{account_id}/rename:
     put:
       tags:
@@ -1636,6 +1716,14 @@ components:
           type: string
         account:
           $ref: '#/components/schemas/account'
+    inline_response_200:
+      type: object
+      properties:
+        id:
+          type: string
+        token:
+          type: string
+      description: The authentication details for the user
     hub_members:
       type: object
       properties:
