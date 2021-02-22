@@ -44,20 +44,6 @@ paths:
                 $ref: '#/components/schemas/user'
         "403":
           description: Not authenticated correctly
-    delete:
-      tags:
-      - user
-      description: Delete the authenticated user
-      operationId: userDelete
-      responses:
-        "200":
-          description: A single user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user'
-        "403":
-          description: Not authenticated correctly
   /user/{id}:
     get:
       tags:
@@ -83,11 +69,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/user'
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
   /user/account/create/{name}:
     post:
       tags:
@@ -111,11 +93,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/account'
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -151,6 +129,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /user/account/{account_id}/rename:
     put:
       tags:
@@ -187,11 +167,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -217,13 +193,11 @@ paths:
           type: string
       responses:
         "200":
-          description: A single user with personal information removed (email and
-            oauth service used, as well as the UUIDs of hubs they are members of,
-            replaced with SHA256 hashes)
+          description: A single account
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: '#/components/schemas/account'
         "404":
           description: Resource does not exist or account does not have permission
             to access it
@@ -234,6 +208,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /user/{user_id}/account/{account_id}:
     get:
       tags:
@@ -259,16 +235,16 @@ paths:
           type: string
       responses:
         "200":
-          description: A single user with personal information removed (email and
-            oauth service used, as well as the UUIDs of hubs they are members of,
-            replaced with SHA256 hashes)
+          description: A single account with the IDs of hubs replaced with hashes
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: '#/components/schemas/account'
         "404":
           description: Resource does not exist or account does not have permission
             to access it
+        "400":
+          description: Malformed request.
   /hub/create/{name}:
     post:
       tags:
@@ -297,11 +273,7 @@ paths:
         "200":
           description: Hub creation success
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -350,6 +322,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /hub/delete/{hub_id}:
     delete:
       tags:
@@ -387,6 +361,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /hub/rename/{hub_id}:
     put:
       tags:
@@ -432,11 +408,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -487,11 +459,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -542,11 +510,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -597,11 +561,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -661,11 +621,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -716,11 +672,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -770,11 +722,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -834,11 +782,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -889,11 +833,7 @@ paths:
           description: Resource does not exist or account does not have permission
             to access it
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -948,11 +888,7 @@ paths:
           description: Account does not have permission to create channels in that
             hub
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -1014,11 +950,7 @@ paths:
         "403":
           description: Account does not have permission to rename that channel
         "400":
-          description: Information on the constraints for a string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_400'
+          description: Malformed request.
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -1078,6 +1010,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /channel/{hub_id}/{channel_id}:
     get:
       tags:
@@ -1127,6 +1061,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /channel/{hub_id}/{channel_id}/search_for/{term}:
     get:
       tags:
@@ -1200,6 +1136,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /channel/{hub_id}/{channel_id}/last_messages:
     get:
       tags:
@@ -1275,6 +1213,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /channel/{hub_id}/{channel_id}/send_message:
     post:
       tags:
@@ -1335,6 +1275,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
   /message/{hub_id}/{channel_id}/{message_id}:
     get:
       tags:
@@ -1394,6 +1336,8 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "400":
+          description: Malformed request.
 components:
   schemas:
     permission_setting:
@@ -1692,26 +1636,6 @@ components:
           type: string
         account:
           $ref: '#/components/schemas/account'
-    inline_response_400:
-      required:
-      - allowed_chars
-      - max_chars
-      - min_chars
-      type: object
-      properties:
-        allowed_chars:
-          type: string
-          description: Characters that are allowed to be used in the string
-          example: ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz-_.0123456789
-        max_chars:
-          type: integer
-          description: Maximum length of the string in characters
-          example: 32
-        min_chars:
-          type: integer
-          description: Minimum length of the string in characters
-          example: 1
-      description: String format information
     hub_members:
       type: object
       properties:
@@ -1790,12 +1714,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/account'
-    string_constraints:
-      description: Information on the constraints for a string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_response_400'
+    malformed_request:
+      description: Malformed request.
   parameters:
     hub_id:
       name: hub_id
