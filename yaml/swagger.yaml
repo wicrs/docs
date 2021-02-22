@@ -114,27 +114,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/account'
-    string_constraints:
-      description: Information on the constraints for a string
-      content:
-        application/json:
-          schema:
-            type: object
-            description: String format information
-            required: [allowed_chars, max_chars, min_chars]
-            properties:
-              allowed_chars:
-                type: string
-                description: Characters that are allowed to be used in the string
-                example: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz-_.0123456789'
-              max_chars:
-                type: integer
-                description: Maximum length of the string in characters
-                example: 32
-              min_chars:
-                type: integer
-                description: Minimum length of the string in characters
-                example: 1
+    malformed_request:
+      description: Malformed request.
   schemas:
     permission_setting:
       description: Current state of a permission for a user or a permission group
@@ -397,16 +378,6 @@ paths:
           description: Not authenticated correctly
       tags:
         - user
-    delete:
-      description: Delete the authenticated user
-      operationId: userDelete
-      responses:
-        200:
-          $ref: '#/components/responses/user'
-        403:
-          description: Not authenticated correctly
-      tags:
-        - user
   '/user/{id}':
     get:
       description: Get the public information of another user
@@ -422,7 +393,7 @@ paths:
         200:
           $ref: '#/components/responses/stripped_user'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
       tags:
         - user
   '/user/account/create/{name}':
@@ -440,7 +411,7 @@ paths:
         200:
           $ref: '#/components/responses/account'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -458,6 +429,8 @@ paths:
           $ref: '#/components/responses/not_found'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - account
   '/user/account/{account_id}/rename':
@@ -484,7 +457,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -497,11 +470,13 @@ paths:
         - $ref: '#/components/parameters/account_id'
       responses:
         200:
-          $ref: '#/components/responses/stripped_user'
+          $ref: '#/components/responses/account'
         404:
           $ref: '#/components/responses/not_found'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - account
   '/user/{user_id}/account/{account_id}':
@@ -518,9 +493,11 @@ paths:
         - $ref: '#/components/parameters/account_id'
       responses:
         200:
-          $ref: '#/components/responses/stripped_user'
+          $ref: '#/components/responses/stripped_account'
         404:
           $ref: '#/components/responses/not_found'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - account
   '/hub/create/{name}':
@@ -539,7 +516,7 @@ paths:
         200:
           description: Hub creation success
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -562,6 +539,8 @@ paths:
           $ref: '#/components/responses/not_found'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - hub
   '/hub/delete/{hub_id}':
@@ -578,6 +557,8 @@ paths:
           $ref: '#/components/responses/not_found'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - hub
   '/hub/rename/{hub_id}':
@@ -605,7 +586,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -628,7 +609,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -651,7 +632,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -674,7 +655,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -701,7 +682,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -722,7 +703,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -743,7 +724,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -770,7 +751,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -791,7 +772,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -822,7 +803,7 @@ paths:
         403:
           description: Account does not have permission to create channels in that hub
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -854,7 +835,7 @@ paths:
         403:
           description: Account does not have permission to rename that channel
         400:
-          $ref: '#/components/responses/string_constraints'
+          $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
       tags:
@@ -881,6 +862,8 @@ paths:
           description: Account does not have permission to delete that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - channel
   '/channel/{hub_id}/{channel_id}':
@@ -902,6 +885,8 @@ paths:
           $ref: '#/components/responses/not_found'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - channel
   '/channel/{hub_id}/{channel_id}/search_for/{term}':
@@ -942,6 +927,8 @@ paths:
           description: Account does not have permission to view messages in that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - message
   '/channel/{hub_id}/{channel_id}/last_messages':
@@ -981,6 +968,8 @@ paths:
           description: Account does not have permission to view messages in that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - message
   '/channel/{hub_id}/{channel_id}/send_message':
@@ -1011,6 +1000,8 @@ paths:
           description: Account does not have permission to send messages in that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - message
   '/message/{hub_id}/{channel_id}/{message_id}':
@@ -1035,6 +1026,8 @@ paths:
           description: Account does not have permission to read messages in that channel
         401:
           $ref: '#/components/responses/unauthorized_error'
+        400:
+          $ref: '#/components/responses/malformed_request'
       tags:
         - message
 tags:
