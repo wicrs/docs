@@ -183,7 +183,7 @@
     <div class="app-desc">More information: <a href="https://github.com/wicrs">https://github.com/wicrs</a></div>
     <div class="app-desc">Contact Info: <a href="none@example.com">none@example.com</a></div>
     <div class="app-desc">Version: 1.0.0</div>
-    <div class="app-desc">BasePath:/wicrs/wicrs/1.0.0</div>
+    <div class="app-desc">BasePath:/v2</div>
     <div class="license-info">GNU General Public License v3.0</div>
     <div class="license-url">https://github.com/wicrs/docs/blob/master/LICENSE</div>
   <h2>Access</h2>
@@ -203,6 +203,12 @@
   <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/account/{account_id}</code></a></li>
   <li><a href="#userAccountGetOther"><code><span class="http-method">get</span> /user/{user_id}/account/{account_id}</code></a></li>
   <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{account_id}/rename</code></a></li>
+  </ul>
+  <h4><a href="#Auth">Auth</a></h4>
+  <ul>
+  <li><a href="#invalidateTokes"><code><span class="http-method">post</span> /invalidate_tokens</code></a></li>
+  <li><a href="#oauthFinish"><code><span class="http-method">get</span> /auth/{service}</code></a></li>
+  <li><a href="#oauthStart"><code><span class="http-method">get</span> /login/{service}</code></a></li>
   </ul>
   <h4><a href="#Channel">Channel</a></h4>
   <ul>
@@ -294,6 +300,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">500</h4>
+    Failed to save new account data.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="userAccountDelete"></a>
@@ -337,6 +346,9 @@
         <a href="#String">String</a>
     <h4 class="field-label">400</h4>
     Malformed request.
+        <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    Unable to remove the account.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -511,6 +523,119 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Auth">Auth</a></h1>
+  <div class="method"><a name="invalidateTokes"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /invalidate_tokens</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">invalidateTokes</span>)</div>
+    <div class="method-notes">Invalidate all authentication tokens for the authenticated user.</div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successfully invalidated all authentication tokens for the authenticated user.
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    Not authenticated correctly
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="oauthFinish"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /auth/{service}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">oauthFinish</span>)</div>
+    <div class="method-notes">Finish the OAuth login sequence</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">service (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; OAuth service used in the oauthStart step </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">code (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>      <div class="param">state (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "id",
+  "token" : "token"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Authentication success
+        <a href="#inline_response_200">inline_response_200</a>
+    <h4 class="field-label">400</h4>
+    Invalid state/code pair given
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="oauthStart"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /login/{service}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">oauthStart</span>)</div>
+    <div class="method-notes">Start the OAuth login sequence</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">service (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; OAuth service to use </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">302</h4>
+    Redirect to the chosen OAuth service&#x27;s API.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Channel">Channel</a></h1>
@@ -1953,6 +2078,7 @@
     <li><a href="#hub_permission"><code>hub_permission</code></a></li>
     <li><a href="#hub_permission_map"><code>hub_permission_map</code></a></li>
     <li><a href="#hub_permission_map_item"><code>hub_permission_map_item</code></a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
     <li><a href="#message"><code>message</code></a></li>
     <li><a href="#message_edited"><code>message_edited</code></a></li>
     <li><a href="#permission_group"><code>permission_group</code></a></li>
@@ -2087,6 +2213,14 @@
     <div class="field-items">
       <div class="param">permission </div><div class="param-desc"><span class="param-type"><a href="#hub_permission">hub_permission</a></span>  </div>
 <div class="param">setting </div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200"><code>inline_response_200</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>The authentication details for the user</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">token (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
