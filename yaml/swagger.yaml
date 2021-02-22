@@ -11,6 +11,8 @@ info:
     url: https://github.com/wicrs
   description: The API for WICRS.
 servers:
+  - description: Local testing environement
+    url: http://localhost:8080/v2
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/wicrs/wicrs/1.0.0
@@ -367,6 +369,73 @@ components:
 security:
   - user_token_auth: []
 paths:
+  '/login/{service}':
+    get:
+      description: Start the OAuth login sequence
+      operationId: oauthStart
+      parameters:
+        - name: service
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [GitHub]
+          description: OAuth service to use
+      responses:
+        302:
+          description: Redirect to the chosen OAuth service's API.
+      tags:
+        - auth
+  '/auth/{service}':
+    get:
+      description: Finish the OAuth login sequence
+      operationId: oauthFinish
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: service
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [GitHub]
+          description: OAuth service used in the oauthStart step
+      responses:
+        200:
+          description: Authentication success
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The authentication details for the user
+                properties:
+                  id:
+                    type: string
+                  token:
+                    type: string
+        400:
+          description: Invalid state/code pair given
+      tags:
+        - auth
+  /invalidate_tokens:
+    post:
+      description: Invalidate all authentication tokens for the authenticated user.
+      operationId: invalidateTokes
+      responses:
+        200:
+          description: Successfully invalidated all authentication tokens for the authenticated user.
+        403:
+          description: Not authenticated correctly
+      tags:
+        - auth
   /user:
     get:
       description: Get the information of the authenticated user
@@ -414,6 +483,8 @@ paths:
           $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        500:
+          description: Failed to save new account data.
       tags:
         - account
   '/user/account/{account_id}/delete':
@@ -431,6 +502,8 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
         400:
           $ref: '#/components/responses/malformed_request'
+        500:
+          description: Unable to remove the account.
       tags:
         - account
   '/user/account/{account_id}/rename':
@@ -1031,6 +1104,8 @@ paths:
       tags:
         - message
 tags:
+  - name: auth
+    description: Operations related to authentication
   - name: user
     description: Operations related to users
   - name: group
