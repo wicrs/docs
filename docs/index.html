@@ -235,7 +235,6 @@
   </ul>
   <h4><a href="#User">User</a></h4>
   <ul>
-  <li><a href="#userDelete"><code><span class="http-method">delete</span> /user</code></a></li>
   <li><a href="#userGet"><code><span class="http-method">get</span> /user</code></a></li>
   <li><a href="#userGetOther"><code><span class="http-method">get</span> /user/{id}</code></a></li>
   </ul>
@@ -290,8 +289,8 @@
     A single account
         <a href="#account">account</a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -336,6 +335,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="userAccountGet"></a>
@@ -358,7 +360,7 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#user">user</a>
+      <a href="#account">account</a>
       
     </div>
 
@@ -367,22 +369,11 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
-  "created" : 0,
+  "parent_id" : "parent_id",
+  "in_hubs" : [ "in_hubs", "in_hubs" ],
   "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
+  "is_bot" : true,
+  "username" : "username"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -395,14 +386,17 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
-        <a href="#user">user</a>
+    A single account
+        <a href="#account">account</a>
     <h4 class="field-label">404</h4>
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="userAccountGetOther"></a>
@@ -427,7 +421,7 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#user">user</a>
+      <a href="#account">account</a>
       
     </div>
 
@@ -436,22 +430,11 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
-  "created" : 0,
+  "parent_id" : "parent_id",
+  "in_hubs" : [ "in_hubs", "in_hubs" ],
   "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
+  "is_bot" : true,
+  "username" : "username"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -463,10 +446,13 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
-        <a href="#user">user</a>
+    A single account with the IDs of hubs replaced with hashes
+        <a href="#account">account</a>
     <h4 class="field-label">404</h4>
     Resource does not exist or account does not have permission to access it
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -510,7 +496,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -521,8 +506,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -571,7 +556,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -585,8 +569,8 @@
     Account does not have permission to create channels in that hub
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -649,6 +633,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubChannelGet"></a>
@@ -710,6 +697,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubChannelRename"></a>
@@ -756,7 +746,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -770,8 +759,8 @@
     Account does not have permission to rename that channel
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -813,7 +802,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -828,8 +816,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -877,7 +865,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -888,8 +875,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -926,7 +913,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -935,8 +921,8 @@
     Hub creation success
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -986,6 +972,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubGet"></a>
@@ -1092,6 +1081,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubKickAccount"></a>
@@ -1127,7 +1119,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -1142,8 +1133,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1221,8 +1212,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1263,7 +1254,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -1278,8 +1268,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1327,7 +1317,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -1338,8 +1327,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1387,7 +1376,6 @@
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
       <li><code>text/plain</code></li>
-      <li><code>application/json</code></li>
     </ul>
 
     <h3 class="field-label">Responses</h3>
@@ -1398,8 +1386,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1438,7 +1426,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -1453,8 +1440,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1493,7 +1480,6 @@
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
     the media type will be conveyed by the <span class="header">Content-Type</span> response header.
     <ul>
-      <li><code>application/json</code></li>
       <li><code>text/plain</code></li>
     </ul>
 
@@ -1508,8 +1494,8 @@
     Resource does not exist or account does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
@@ -1596,6 +1582,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubChannelGetMessage"></a>
@@ -1667,6 +1656,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubChannelSearchMessages"></a>
@@ -1749,6 +1741,9 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubChannelSendMessage"></a>
@@ -1810,67 +1805,12 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
-  </div> <!-- method -->
-  <hr/>
-  <h1><a name="User">User</a></h1>
-  <div class="method"><a name="userDelete"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userDelete</span>)</div>
-    <div class="method-notes">Delete the authenticated user</div>
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#user">user</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
-  "created" : 0,
-  "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single user
-        <a href="#user">user</a>
-    <h4 class="field-label">403</h4>
-    Not authenticated correctly
+    <h4 class="field-label">400</h4>
+    Malformed request.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="User">User</a></h1>
   <div class="method"><a name="userGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -1988,8 +1928,8 @@
     A single user with personal information removed (email and oauth service used, as well as the UUIDs of hubs they are members of, replaced with SHA256 hashes)
         <a href="#user">user</a>
     <h4 class="field-label">400</h4>
-    Information on the constraints for a string
-        <a href="#inline_response_400">inline_response_400</a>
+    Malformed request.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
 
@@ -2013,7 +1953,6 @@
     <li><a href="#hub_permission"><code>hub_permission</code></a></li>
     <li><a href="#hub_permission_map"><code>hub_permission_map</code></a></li>
     <li><a href="#hub_permission_map_item"><code>hub_permission_map_item</code></a></li>
-    <li><a href="#inline_response_400"><code>inline_response_400</code></a></li>
     <li><a href="#message"><code>message</code></a></li>
     <li><a href="#message_edited"><code>message_edited</code></a></li>
     <li><a href="#permission_group"><code>permission_group</code></a></li>
@@ -2148,18 +2087,6 @@
     <div class="field-items">
       <div class="param">permission </div><div class="param-desc"><span class="param-type"><a href="#hub_permission">hub_permission</a></span>  </div>
 <div class="param">setting </div><div class="param-desc"><span class="param-type"><a href="#permission_setting">permission_setting</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="inline_response_400"><code>inline_response_400</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>String format information</div>
-    <div class="field-items">
-      <div class="param">allowed_chars </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Characters that are allowed to be used in the string </div>
-          <div class="param-desc"><span class="param-type">example: ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz-_.0123456789</span></div>
-<div class="param">max_chars </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Maximum length of the string in characters </div>
-          <div class="param-desc"><span class="param-type">example: 32</span></div>
-<div class="param">min_chars </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minimum length of the string in characters </div>
-          <div class="param-desc"><span class="param-type">example: 1</span></div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
