@@ -226,7 +226,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: new_name
+      - name: name
         in: query
         description: The new username for the account
         required: true
@@ -332,7 +332,7 @@ paths:
       description: Create a new hub owned by the authenticated user
       operationId: hubCreate
       parameters:
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -365,6 +365,11 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "404":
+          description: Resource does not exist or account does not have permission
+            to access it
+        "500":
+          description: Unable to create the new hub.
   /hub/{hub_id}:
     get:
       tags:
@@ -380,7 +385,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -408,7 +413,8 @@ paths:
                 example: Authentication information is missing or invalid
         "400":
           description: Malformed request.
-  /hub/delete/{hub_id}:
+        "500":
+          description: Unable to load the hub data.
     delete:
       tags:
       - hub
@@ -423,7 +429,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -447,6 +453,8 @@ paths:
                 example: Authentication information is missing or invalid
         "400":
           description: Malformed request.
+        "500":
+          description: Unable to delete the hub.
   /hub/rename/{hub_id}:
     put:
       tags:
@@ -462,7 +470,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: new_name
+      - name: name
         in: query
         description: The new name for the hub
         required: true
@@ -470,7 +478,7 @@ paths:
         explode: true
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -516,14 +524,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -567,14 +567,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -618,14 +610,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -670,14 +654,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -730,14 +706,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -781,14 +749,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -831,14 +791,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -891,14 +843,6 @@ paths:
         schema:
           type: string
       - name: account_id
-        in: path
-        description: UUID of the account to perform the operation on
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: access_account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -948,7 +892,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1011,7 +955,7 @@ paths:
         explode: true
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1065,7 +1009,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1119,7 +1063,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1170,7 +1114,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1245,7 +1189,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1322,7 +1266,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1384,7 +1328,7 @@ paths:
         explode: false
         schema:
           type: string
-      - name: access_account_id
+      - name: account_id
         in: query
         description: UUID of an account that has the necessary permissions and access
           to the hub and channel
@@ -1573,7 +1517,7 @@ components:
           $ref: '#/components/schemas/date'
         name:
           type: string
-          description: Name of the channel
+          description: Name of the hub
         members:
           type: object
           additionalProperties:
@@ -1837,7 +1781,7 @@ components:
       schema:
         type: string
     access_account_id:
-      name: access_account_id
+      name: account_id
       in: query
       description: UUID of an account that has the necessary permissions and access
         to the hub and channel
