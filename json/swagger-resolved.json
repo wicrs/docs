@@ -463,7 +463,14 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Hub creation success"
+            "description" : "Hub creation success, gives ID string",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
           },
           "400" : {
             "description" : "Malformed request."
