@@ -1030,9 +1030,17 @@
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -1043,8 +1051,8 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Hub creation success
-        <a href="#"></a>
+    Hub creation success, gives ID string
+        <a href="#String">String</a>
     <h4 class="field-label">400</h4>
     Malformed request.
         <a href="#"></a>
