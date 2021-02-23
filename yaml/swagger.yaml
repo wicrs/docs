@@ -44,7 +44,7 @@ components:
         type: string
       description: UUID of the account to perform the operation on
     access_account_id:
-      name: access_account_id
+      name: account_id
       in: query
       required: true
       schema:
@@ -219,7 +219,7 @@ components:
         created:
           $ref: '#/components/schemas/date'
         name:
-          description: Name of the channel
+          description: Name of the hub
           type: string
         members:
           description: Members of the hub
@@ -512,7 +512,7 @@ paths:
       operationId: userAccountRename
       parameters:
         - $ref: '#/components/parameters/account_id'
-        - name: new_name
+        - name: name
           in: query
           required: true
           schema:
@@ -596,6 +596,10 @@ paths:
           $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        404:
+          $ref: '#/components/responses/not_found'
+        500:
+          description: Unable to create the new hub.
       tags:
         - hub
   '/hub/{hub_id}':
@@ -618,9 +622,10 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
         400:
           $ref: '#/components/responses/malformed_request'
+        500:
+          description: Unable to load the hub data.
       tags:
         - hub
-  '/hub/delete/{hub_id}':
     delete:
       description: Delete a hub
       operationId: hubDelete
@@ -636,6 +641,8 @@ paths:
           $ref: '#/components/responses/unauthorized_error'
         400:
           $ref: '#/components/responses/malformed_request'
+        500:
+          description: Unable to delete the hub.
       tags:
         - hub
   '/hub/rename/{hub_id}':
@@ -644,7 +651,7 @@ paths:
       operationId: hubRename
       parameters:
         - $ref: '#/components/parameters/hub_id'
-        - name: new_name
+        - name: name
           in: query
           required: true
           schema:
