@@ -587,7 +587,11 @@ paths:
           description: Name for the new hub
       responses:
         200:
-          description: Hub creation success
+          description: Hub creation success, gives ID string
+          content:
+            text/plain:
+              schema:
+                type: string
         400:
           $ref: '#/components/responses/malformed_request'
         401:
