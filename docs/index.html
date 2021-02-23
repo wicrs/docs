@@ -222,7 +222,7 @@
   <li><a href="#hubBanAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/ban</code></a></li>
   <li><a href="#hubBanCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_banned/{account_id}</code></a></li>
   <li><a href="#hubCreate"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
-  <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/delete/{hub_id}</code></a></li>
+  <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/{hub_id}</code></a></li>
   <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{hub_id}</code></a></li>
   <li><a href="#hubKickAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/kick</code></a></li>
   <li><a href="#hubMemberGet"><code><span class="http-method">get</span> /member/{hub_id}/{account_id}</code></a></li>
@@ -486,7 +486,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">new_name (required)</div>
+      <div class="param">name (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new username for the account </div>    </div>  <!-- field-items -->
 
@@ -659,7 +659,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -721,7 +721,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -783,7 +783,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -849,7 +849,7 @@
     <div class="field-items">
       <div class="param">new_name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>      <div class="param">access_account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -903,16 +903,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">time (optional)</div>
       
@@ -959,16 +957,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1025,7 +1021,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1059,12 +1055,18 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+    <h4 class="field-label">404</h4>
+    Resource does not exist or account does not have permission to access it
+        <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    Unable to create the new hub.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubDelete"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/delete/{hub_id}</code></pre></div>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /hub/{hub_id}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubDelete</span>)</div>
     <div class="method-notes">Delete a hub</div>
 
@@ -1079,7 +1081,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1108,6 +1110,9 @@
     <h4 class="field-label">400</h4>
     Malformed request.
         <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    Unable to delete the hub.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubGet"></a>
@@ -1128,7 +1133,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1217,6 +1222,9 @@
     <h4 class="field-label">400</h4>
     Malformed request.
         <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    Unable to load the hub data.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubKickAccount"></a>
@@ -1230,16 +1238,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1284,16 +1290,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1363,16 +1367,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">time (optional)</div>
       
@@ -1419,16 +1421,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1485,9 +1485,9 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">new_name (required)</div>
+      <div class="param">name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>      <div class="param">access_account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1537,16 +1537,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1591,16 +1589,14 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
 
 
 
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1655,7 +1651,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">count (optional)</div>
       
@@ -1742,7 +1738,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
@@ -1816,7 +1812,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">max (optional)</div>
       
@@ -1899,7 +1895,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">access_account_id (required)</div>
+      <div class="param">account_id (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">message (required)</div>
       
@@ -2160,7 +2156,7 @@
 <div class="param">bans </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been banned from the hub </div>
 <div class="param">default_group </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the permission group assigned to new members </div>
 <div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the channel </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the hub </div>
 <div class="param">members </div><div class="param-desc"><span class="param-type"><a href="#hub_members">map[String, hub_members]</a></span> Members of the hub </div>
 <div class="param">groups </div><div class="param-desc"><span class="param-type"><a href="#hub_groups">map[String, hub_groups]</a></span> Permission groups that belong to this hub </div>
 <div class="param">channels </div><div class="param-desc"><span class="param-type"><a href="#hub_channels">map[String, hub_channels]</a></span> Channels in the hub </div>
