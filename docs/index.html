@@ -182,7 +182,7 @@
     <div class="app-desc">The API for WICRS.</div>
     <div class="app-desc">More information: <a href="https://github.com/wicrs">https://github.com/wicrs</a></div>
     <div class="app-desc">Contact Info: <a href="none@example.com">none@example.com</a></div>
-    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">Version: v2</div>
     <div class="app-desc">BasePath:/v2</div>
     <div class="license-info">GNU General Public License v3.0</div>
     <div class="license-url">https://github.com/wicrs/docs/blob/master/LICENSE</div>
@@ -196,14 +196,6 @@
 
   <h3>Table of Contents </h3>
   <div class="method-summary"></div>
-  <h4><a href="#Account">Account</a></h4>
-  <ul>
-  <li><a href="#userAccountCreate"><code><span class="http-method">post</span> /user/account/create/{name}</code></a></li>
-  <li><a href="#userAccountDelete"><code><span class="http-method">delete</span> /user/account/{account_id}/delete</code></a></li>
-  <li><a href="#userAccountGet"><code><span class="http-method">get</span> /user/account/{account_id}</code></a></li>
-  <li><a href="#userAccountGetOther"><code><span class="http-method">get</span> /user/{user_id}/account/{account_id}</code></a></li>
-  <li><a href="#userAccountRename"><code><span class="http-method">put</span> /user/account/{account_id}/rename</code></a></li>
-  </ul>
   <h4><a href="#Auth">Auth</a></h4>
   <ul>
   <li><a href="#invalidateTokes"><code><span class="http-method">post</span> /invalidate_tokens</code></a></li>
@@ -219,18 +211,18 @@
   </ul>
   <h4><a href="#Hub">Hub</a></h4>
   <ul>
-  <li><a href="#hubBanAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/ban</code></a></li>
-  <li><a href="#hubBanCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_banned/{account_id}</code></a></li>
+  <li><a href="#hubBanCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_banned/{user_id}</code></a></li>
+  <li><a href="#hubBanUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/ban</code></a></li>
   <li><a href="#hubCreate"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
   <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/{hub_id}</code></a></li>
   <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{hub_id}</code></a></li>
-  <li><a href="#hubKickAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/kick</code></a></li>
-  <li><a href="#hubMemberGet"><code><span class="http-method">get</span> /member/{hub_id}/{account_id}</code></a></li>
-  <li><a href="#hubMuteAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/mute</code></a></li>
-  <li><a href="#hubMuteCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_muted/{account_id}</code></a></li>
+  <li><a href="#hubKickUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/kick</code></a></li>
+  <li><a href="#hubMemberGet"><code><span class="http-method">get</span> /member/{hub_id}/{user_id}</code></a></li>
+  <li><a href="#hubMuteCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_muted/{user_id}</code></a></li>
+  <li><a href="#hubMuteUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/mute</code></a></li>
   <li><a href="#hubRename"><code><span class="http-method">put</span> /hub/rename/{hub_id}</code></a></li>
-  <li><a href="#hubUnbanAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/unban</code></a></li>
-  <li><a href="#hubUnmuteAccount"><code><span class="http-method">post</span> /member/{hub_id}/{account_id}/unmute</code></a></li>
+  <li><a href="#hubUnbanUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/unban</code></a></li>
+  <li><a href="#hubUnmuteUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/unmute</code></a></li>
   </ul>
   <h4><a href="#Message">Message</a></h4>
   <ul>
@@ -245,286 +237,6 @@
   <li><a href="#userGetOther"><code><span class="http-method">get</span> /user/{id}</code></a></li>
   </ul>
 
-  <h1><a name="Account">Account</a></h1>
-  <div class="method"><a name="userAccountCreate"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /user/account/create/{name}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountCreate</span>)</div>
-    <div class="method-notes">Get the public information of another user</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">name (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Username for the account being created </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#account">account</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "parent_id" : "parent_id",
-  "in_hubs" : [ "in_hubs", "in_hubs" ],
-  "id" : "id",
-  "is_bot" : true,
-  "username" : "username"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single account
-        <a href="#account">account</a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-    <h4 class="field-label">500</h4>
-    Failed to save new account data.
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userAccountDelete"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user/account/{account_id}/delete</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountDelete</span>)</div>
-    <div class="method-notes">Delete one of the authenticated user&#x27;s accounts</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Account deletion success
-        <a href="#"></a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-    <h4 class="field-label">500</h4>
-    Unable to remove the account.
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userAccountGet"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/account/{account_id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountGet</span>)</div>
-    <div class="method-notes">Get the information of one of the currently authenticated user&#x27;s accounts</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#account">account</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "parent_id" : "parent_id",
-  "in_hubs" : [ "in_hubs", "in_hubs" ],
-  "id" : "id",
-  "is_bot" : true,
-  "username" : "username"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single account
-        <a href="#account">account</a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userAccountGetOther"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{user_id}/account/{account_id}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountGetOther</span>)</div>
-    <div class="method-notes">Get the public information of a user&#x27;s account</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">user_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user who owns the account being requested </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#account">account</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "parent_id" : "parent_id",
-  "in_hubs" : [ "in_hubs", "in_hubs" ],
-  "id" : "id",
-  "is_bot" : true,
-  "username" : "username"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    A single account with the IDs of hubs replaced with hashes
-        <a href="#account">account</a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="userAccountRename"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="put"><code class="huge"><span class="http-method">put</span> /user/account/{account_id}/rename</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">userAccountRename</span>)</div>
-    <div class="method-notes">Change the username of one of the authenticated user&#x27;s accounts</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of the account to perform the operation on </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">name (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new username for the account </div>    </div>  <!-- field-items -->
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      
-      String
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>"Test Account 1"</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Account rename success
-        <a href="#String">String</a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-  </div> <!-- method -->
-  <hr/>
   <h1><a name="Auth">Auth</a></h1>
   <div class="method"><a name="invalidateTokes"></a>
     <div class="method-path">
@@ -657,11 +369,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -688,10 +395,10 @@
     Channel creation success
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to create channels in that hub
+    User does not have permission to create channels in that hub
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -719,11 +426,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -750,10 +452,10 @@
     Channel deletion success
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to delete that channel
+    User does not have permission to delete that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -781,11 +483,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -817,7 +514,7 @@
     Channel get success
         <a href="#channel">channel</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -849,9 +546,7 @@
     <div class="field-items">
       <div class="param">new_name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; New name for the channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -878,10 +573,10 @@
     Channel rename success
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to rename that channel
+    User does not have permission to rename that channel
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -892,81 +587,24 @@
   </div> <!-- method -->
   <hr/>
   <h1><a name="Hub">Hub</a></h1>
-  <div class="method"><a name="hubBanAccount"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{account_id}/ban</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubBanAccount</span>)</div>
-    <div class="method-notes">Ban an account from a hub, also bans all other accounts owned by account parent user</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">hub_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">time (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; How long the account should stay banned in milliseconds, 0 means infinite default: 0 </div>    </div>  <!-- field-items -->
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Account ban success
-        <a href="#"></a>
-    <h4 class="field-label">403</h4>
-    Account does not have permission to ban accounts in that hub
-        <a href="#"></a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-  </div> <!-- method -->
-  <hr/>
   <div class="method"><a name="hubBanCheck"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{hub_id}/is_banned/{account_id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{hub_id}/is_banned/{user_id}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubBanCheck</span>)</div>
-    <div class="method-notes">Check if an account is banned from a hub</div>
+    <div class="method-notes">Check if a user is banned from a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -990,10 +628,59 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Account ban status
+    User ban status
         <a href="#Boolean">Boolean</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubBanUser"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{user_id}/ban</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubBanUser</span>)</div>
+    <div class="method-notes">Ban a user from a hub</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hub_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    User ban success
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    User does not have permission to ban users in that hub
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1019,11 +706,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1056,7 +738,7 @@
     Authentication information is missing or invalid
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">500</h4>
     Unable to create the new hub.
@@ -1079,11 +761,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
 
@@ -1102,7 +779,7 @@
     Hub deletion success
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1131,11 +808,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1182,7 +854,7 @@
           }
         },
         "groups" : [ "groups", "groups" ],
-        "account" : "account"
+        "user" : "user"
       }
     }
   },
@@ -1214,7 +886,7 @@
     Hub info
         <a href="#hub">hub</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1227,27 +899,24 @@
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubKickAccount"></a>
+  <div class="method"><a name="hubKickUser"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{account_id}/kick</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubKickAccount</span>)</div>
-    <div class="method-notes">Kick an account from a hub, also kicks all other accounts owned by account parent user</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{user_id}/kick</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubKickUser</span>)</div>
+    <div class="method-notes">Kick a user from a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
 
@@ -1263,13 +932,13 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Account kick success
+    User kick success
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to kick accounts in that hub
+    User does not have permission to kick users in that hub
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1282,7 +951,7 @@
   <div class="method"><a name="hubMemberGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /member/{hub_id}/{account_id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /member/{hub_id}/{user_id}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubMemberGet</span>)</div>
     <div class="method-notes">Get information on a member of a hub</div>
 
@@ -1290,16 +959,13 @@
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -1330,7 +996,7 @@
     }
   },
   "groups" : [ "groups", "groups" ],
-  "account" : "account"
+  "user" : "user"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -1346,61 +1012,7 @@
     Hub member get success
         <a href="#hub_member">hub_member</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
-        <a href="#"></a>
-    <h4 class="field-label">400</h4>
-    Malformed request.
-        <a href="#"></a>
-    <h4 class="field-label">401</h4>
-    Authentication information is missing or invalid
-        <a href="#String">String</a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="hubMuteAccount"></a>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{account_id}/mute</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubMuteAccount</span>)</div>
-    <div class="method-notes">Mute an account in a hub, also mutes all other accounts owned by account parent user</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">hub_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">time (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; How long the account should stay muted in milliseconds, 0 means infinite default: 0 </div>    </div>  <!-- field-items -->
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>text/plain</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Account mute success
-        <a href="#"></a>
-    <h4 class="field-label">403</h4>
-    Account does not have permission to mute accounts in that hub
-        <a href="#"></a>
-    <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1413,24 +1025,21 @@
   <div class="method"><a name="hubMuteCheck"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{hub_id}/is_muted/{account_id}</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /hub/{hub_id}/is_muted/{user_id}</code></pre></div>
     <div class="method-summary"> (<span class="nickname">hubMuteCheck</span>)</div>
-    <div class="method-notes">Check if an account is muted in a hub</div>
+    <div class="method-notes">Check if a user is muted in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
@@ -1454,10 +1063,59 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Account mute status
+    User mute status
         <a href="#Boolean">Boolean</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Malformed request.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Authentication information is missing or invalid
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubMuteUser"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{user_id}/mute</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubMuteUser</span>)</div>
+    <div class="method-notes">Mute a user in a hub</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hub_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    User mute success
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    User does not have permission to mute users in that hub
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1487,9 +1145,7 @@
     <div class="field-items">
       <div class="param">name (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The new name for the hub </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1516,7 +1172,7 @@
     Hub deletion success
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1526,27 +1182,24 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubUnbanAccount"></a>
+  <div class="method"><a name="hubUnbanUser"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{account_id}/unban</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubUnbanAccount</span>)</div>
-    <div class="method-notes">Unban an account from a hub, also unbans all other accounts owned by account parent user</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{user_id}/unban</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubUnbanUser</span>)</div>
+    <div class="method-notes">Unban a user from a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
 
@@ -1562,13 +1215,13 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Account unban success
+    User unban success
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to unban accounts in that hub
+    User does not have permission to unban users in that hub
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1578,27 +1231,24 @@
         <a href="#String">String</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="hubUnmuteAccount"></a>
+  <div class="method"><a name="hubUnmuteUser"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{account_id}/unmute</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">hubUnmuteAccount</span>)</div>
-    <div class="method-notes">Unmute an account in a hub, also unmutes all other accounts owned by account parent user</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /member/{hub_id}/{user_id}/unmute</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubUnmuteUser</span>)</div>
+    <div class="method-notes">Unmute a user in a hub</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
       <div class="param">hub_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>      <div class="param">user_id (required)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a user </div>    </div>  <!-- field-items -->
+
+
+
+
 
 
 
@@ -1614,13 +1264,13 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    Account unmute success
+    User unmute success
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to unmute accounts in that hub
+    User does not have permission to unmute users in that hub
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     Malformed request.
@@ -1651,9 +1301,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">count (optional)</div>
+      <div class="param">count (optional)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of messages to get default: 128 </div>      <div class="param">from (optional)</div>
       
@@ -1703,10 +1351,10 @@
     Got messages successfully
         
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to view messages in that channel
+    User does not have permission to view messages in that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1736,11 +1384,6 @@
 
 
 
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -1777,10 +1420,10 @@
     Message get success
         <a href="#message">message</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to read messages in that channel
+    User does not have permission to read messages in that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1812,9 +1455,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">max (optional)</div>
+      <div class="param">max (optional)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Maximum number of results default: 128 </div>    </div>  <!-- field-items -->
 
@@ -1862,10 +1503,10 @@
     Got messages successfully
         
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to view messages in that channel
+    User does not have permission to view messages in that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1895,9 +1536,7 @@
 
     <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">account_id (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; UUID of an account that has the necessary permissions and access to the hub and channel </div>      <div class="param">message (required)</div>
+      <div class="param">message (required)</div>
       
             <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Contents of the message </div>    </div>  <!-- field-items -->
 
@@ -1926,10 +1565,10 @@
     Message sent successfully
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
-    Resource does not exist or account does not have permission to access it
+    Resource does not exist or user does not have permission to access it
         <a href="#"></a>
     <h4 class="field-label">403</h4>
-    Account does not have permission to send messages in that channel
+    User does not have permission to send messages in that channel
         <a href="#"></a>
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
@@ -1964,22 +1603,12 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
+  "oauth_service" : "GitHub",
   "created" : 0,
+  "in_hubs" : [ "in_hubs", "in_hubs" ],
   "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
+  "email" : "email",
+  "username" : "username"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -2027,22 +1656,12 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "oauth_service" : "oauth_service",
+  "oauth_service" : "GitHub",
   "created" : 0,
+  "in_hubs" : [ "in_hubs", "in_hubs" ],
   "id" : "id",
-  "accounts" : {
-    "key" : {
-      "id" : "id",
-      "account" : {
-        "parent_id" : "parent_id",
-        "in_hubs" : [ "in_hubs", "in_hubs" ],
-        "id" : "id",
-        "is_bot" : true,
-        "username" : "username"
-      }
-    }
-  },
-  "email" : "email"
+  "email" : "email",
+  "username" : "username"
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -2067,8 +1686,6 @@
 
   <h3>Table of Contents</h3>
   <ol>
-    <li><a href="#account"><code>account</code></a></li>
-    <li><a href="#account_map_item"><code>account_map_item</code></a></li>
     <li><a href="#channel"><code>channel</code></a></li>
     <li><a href="#channel_permission"><code>channel_permission</code></a></li>
     <li><a href="#channel_permission_map"><code>channel_permission_map</code></a></li>
@@ -2090,26 +1707,6 @@
     <li><a href="#user"><code>user</code></a></li>
   </ol>
 
-  <div class="model">
-    <h3><a name="account"><code>account</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account </div>
-<div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Username of the account </div>
-<div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">parent_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user that owns the account </div>
-<div class="param">is_bot </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the account is dedicated to automated tasks/bot work </div>
-<div class="param">in_hubs </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of the UUIDs of hubs the account is a member of </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="account_map_item"><code>account_map_item</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">account </div><div class="param-desc"><span class="param-type"><a href="#account">account</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
   <div class="model">
     <h3><a name="channel"><code>channel</code></a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Represents a channel in a WICRS server</div>
@@ -2151,7 +1748,7 @@
     <div class='model-description'>Represents a hub in a WICRS server</div>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub </div>
-<div class="param">owner </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that owns the hub </div>
+<div class="param">owner </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the user that owns the hub </div>
 <div class="param">mutes (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been muted in the hub </div>
 <div class="param">bans </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> List of IDs of users that have been banned from the hub </div>
 <div class="param">default_group </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the permission group assigned to new members </div>
@@ -2182,7 +1779,7 @@
     <h3><a name="hub_member"><code>hub_member</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">account </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
+      <div class="param">user </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the user this member represents </div>
 <div class="param">joined </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
 <div class="param">hub </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the hub this member is from </div>
 <div class="param">nickname </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name used by the member when in this hub </div>
@@ -2195,7 +1792,7 @@
     <h3><a name="hub_members"><code>hub_members</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account this member represents </div>
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the user this member represents </div>
 <div class="param">group (optional)</div><div class="param-desc"><span class="param-type"><a href="#hub_member">hub_member</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -2233,7 +1830,7 @@
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the message </div>
 <div class="param">sent </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
-<div class="param">sender </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the account that sent the message </div>
+<div class="param">sender </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> UUID of the user that sent the message </div>
 <div class="param">content </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Content of the sent message </div>
 <div class="param">edited (optional)</div><div class="param-desc"><span class="param-type"><a href="#message_edited">message_edited</a></span>  </div>
     </div>  <!-- field-items -->
@@ -2267,10 +1864,13 @@
     <div class='model-description'>Represents a user of WICRS</div>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the user, a hash of the email and if of the account they used to login to their chosen OAuth2 service </div>
+<div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Username of the user </div>
 <div class="param">oauth_service </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the OAuth2 service the user used to sign up </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">GitHub</div>
 <div class="param">created </div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  </div>
 <div class="param">email </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The primary email of the account the user used for their chosen OAuth2 service </div>
-<div class="param">accounts </div><div class="param-desc"><span class="param-type"><a href="#account_map_item">map[String, account_map_item]</a></span> A list of the accounts the user owns </div>
+<div class="param">in_hubs </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of the UUIDs of hubs the user is a member of </div>
     </div>  <!-- field-items -->
   </div>
   </body>
