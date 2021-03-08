@@ -101,8 +101,13 @@ paths:
         "200":
           description: Successfully invalidated all authentication tokens for the
             authenticated user.
-        "403":
-          description: Not authenticated correctly
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
   /user:
     get:
       tags:
@@ -116,8 +121,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
-        "403":
-          description: Not authenticated correctly
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
+  /user/change_name/{new_name}:
+    put:
+      description: Change the username of the authenticated user
+      operationId: userChangeName
+      parameters:
+      - name: new_name
+        in: path
+        description: New username
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success,
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Previous username
+        "400":
+          description: Malformed request.
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
   /user/{id}:
     get:
       tags:
@@ -144,6 +184,13 @@ paths:
                 $ref: '#/components/schemas/user'
         "400":
           description: Malformed request.
+        "401":
+          description: Authentication information is missing or invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Authentication information is missing or invalid
   /hub/create/{name}:
     post:
       tags:
@@ -233,6 +280,32 @@ paths:
       responses:
         "200":
           description: Hub deletion success
+        "403":
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -291,6 +364,32 @@ paths:
               schema:
                 type: string
                 example: Authentication information is missing or invalid
+        "403":
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
   /hub/{hub_id}/is_banned/{user_id}:
     get:
       tags:
@@ -444,7 +543,31 @@ paths:
         "200":
           description: User ban success
         "403":
-          description: User does not have permission to ban users in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -484,7 +607,31 @@ paths:
         "200":
           description: User unban success
         "403":
-          description: User does not have permission to unban users in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -524,7 +671,31 @@ paths:
         "200":
           description: User kick success
         "403":
-          description: User does not have permission to kick users in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -564,7 +735,31 @@ paths:
         "200":
           description: User mute success
         "403":
-          description: User does not have permission to mute users in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -604,7 +799,31 @@ paths:
         "200":
           description: User unmute success
         "403":
-          description: User does not have permission to unmute users in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "404":
           description: Resource does not exist or user does not have permission to
             access it
@@ -652,7 +871,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to create channels in that hub
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "400":
           description: Malformed request.
         "401":
@@ -705,7 +948,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to rename that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "400":
           description: Malformed request.
         "401":
@@ -750,7 +1017,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to delete that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -858,7 +1149,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to view messages in that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -926,7 +1241,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to view messages in that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -979,7 +1318,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to send messages in that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -1031,7 +1394,31 @@ paths:
           description: Resource does not exist or user does not have permission to
             access it
         "403":
-          description: User does not have permission to read messages in that channel
+          description: The authenticated user does not have permission to perform
+            the action
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Permission required to perform the operation
+                enum:
+                - All
+                - ViewChannel
+                - Configure
+                - SendMessage
+                - ReadMessage
+                - Administrate
+                - CreateChannel
+                - DeleteChannel
+                - CreateCategory
+                - DeleteCategory
+                - ArrangeChannel
+                - Invite
+                - Mute
+                - Unmute
+                - Kick
+                - Ban
+                - Unban
         "401":
           description: Authentication information is missing or invalid
           content:
@@ -1356,6 +1743,32 @@ components:
     not_found:
       description: Resource does not exist or user does not have permission to access
         it
+    forbidden_error:
+      description: The authenticated user does not have permission to perform the
+        action
+      content:
+        text/plain:
+          schema:
+            type: string
+            description: Permission required to perform the operation
+            enum:
+            - All
+            - ViewChannel
+            - Configure
+            - SendMessage
+            - ReadMessage
+            - Administrate
+            - CreateChannel
+            - DeleteChannel
+            - CreateCategory
+            - DeleteCategory
+            - ArrangeChannel
+            - Invite
+            - Mute
+            - Unmute
+            - Kick
+            - Ban
+            - Unban
     unauthorized_error:
       description: Authentication information is missing or invalid
       content:
