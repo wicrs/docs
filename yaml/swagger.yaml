@@ -78,6 +78,14 @@ components:
   responses:
     not_found:
       description: Resource does not exist or user does not have permission to access it
+    forbidden_error:
+      description: The authenticated user does not have permission to perform the action
+      content:
+        text/plain:
+          schema:
+            description: Permission required to perform the operation
+            type: string
+            enum: [All, ViewChannel, Configure, SendMessage, ReadMessage, Administrate, CreateChannel, DeleteChannel, CreateCategory, DeleteCategory, ArrangeChannel, Invite, Mute, Unmute, Kick, Ban, Unban]
     unauthorized_error:
       description: Authentication information is missing or invalid
       content:
@@ -386,8 +394,8 @@ paths:
       responses:
         200:
           description: Successfully invalidated all authentication tokens for the authenticated user.
-        403:
-          description: Not authenticated correctly
+        401:
+          $ref: '#/components/responses/unauthorized_error'
       tags:
         - auth
   /user:
@@ -397,10 +405,33 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/user'
-        403:
-          description: Not authenticated correctly
+        401:
+          $ref: '#/components/responses/unauthorized_error'
       tags:
         - user
+  '/user/change_name/{new_name}':
+    put:
+      description: Change the username of the authenticated user
+      operationId: userChangeName
+      responses:
+        200:
+          description: Success,
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Previous username
+        400:
+          $ref: '#/components/responses/malformed_request'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
+      parameters: 
+        - name: new_name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: New username
   '/user/{id}':
     get:
       description: Get the public information of another user
@@ -417,6 +448,8 @@ paths:
           $ref: '#/components/responses/stripped_user'
         400:
           $ref: '#/components/responses/malformed_request'
+        401:
+          $ref: '#/components/responses/unauthorized_error'
       tags:
         - user
   '/hub/create/{name}':
@@ -478,6 +511,8 @@ paths:
       responses:
         200:
           description: Hub deletion success
+        403:
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         401:
@@ -515,6 +550,8 @@ paths:
           $ref: '#/components/responses/malformed_request'
         401:
           $ref: '#/components/responses/unauthorized_error'
+        403:
+          $ref: '#/components/responses/forbidden_error'
       tags:
         - hub
   '/hub/{hub_id}/is_banned/{user_id}':
@@ -594,7 +631,7 @@ paths:
         200:
           description: User ban success
         403:
-          description: User does not have permission to ban users in that hub
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         400:
@@ -614,7 +651,7 @@ paths:
         200:
           description: User unban success
         403:
-          description: User does not have permission to unban users in that hub
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         400:
@@ -634,7 +671,7 @@ paths:
         200:
           description: User kick success
         403:
-          description: User does not have permission to kick users in that hub
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         400:
@@ -654,7 +691,7 @@ paths:
         200:
           description: User mute success
         403:
-          description: User does not have permission to mute users in that hub
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         400:
@@ -674,7 +711,7 @@ paths:
         200:
           description: User unmute success
         403:
-          description: User does not have permission to unmute users in that hub
+          $ref: '#/components/responses/forbidden_error'
         404:
           $ref: '#/components/responses/not_found'
         400:
@@ -706,7 +743,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to create channels in that hub
+          $ref: '#/components/responses/forbidden_error'
         400:
           $ref: '#/components/responses/malformed_request'
         401:
@@ -737,7 +774,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to rename that channel
+          $ref: '#/components/responses/forbidden_error'
         400:
           $ref: '#/components/responses/malformed_request'
         401:
@@ -762,7 +799,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to delete that channel
+          $ref: '#/components/responses/forbidden_error'
         401:
           $ref: '#/components/responses/unauthorized_error'
         400:
@@ -825,7 +862,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to view messages in that channel
+          $ref: '#/components/responses/forbidden_error'
         401:
           $ref: '#/components/responses/unauthorized_error'
         400:
@@ -865,7 +902,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to view messages in that channel
+          $ref: '#/components/responses/forbidden_error'
         401:
           $ref: '#/components/responses/unauthorized_error'
         400:
@@ -896,7 +933,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to send messages in that channel
+          $ref: '#/components/responses/forbidden_error'
         401:
           $ref: '#/components/responses/unauthorized_error'
         400:
@@ -921,7 +958,7 @@ paths:
         404:
           $ref: '#/components/responses/not_found'
         403:
-          description: User does not have permission to read messages in that channel
+          $ref: '#/components/responses/forbidden_error'
         401:
           $ref: '#/components/responses/unauthorized_error'
         400:
