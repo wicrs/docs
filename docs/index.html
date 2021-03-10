@@ -220,7 +220,9 @@
   <li><a href="#hubCreate"><code><span class="http-method">post</span> /hub/create/{name}</code></a></li>
   <li><a href="#hubDelete"><code><span class="http-method">delete</span> /hub/{hub_id}</code></a></li>
   <li><a href="#hubGet"><code><span class="http-method">get</span> /hub/{hub_id}</code></a></li>
+  <li><a href="#hubJoin"><code><span class="http-method">post</span> /hub/join/{hub_id}</code></a></li>
   <li><a href="#hubKickUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/kick</code></a></li>
+  <li><a href="#hubLeave"><code><span class="http-method">post</span> /hub/leave/{hub_id}</code></a></li>
   <li><a href="#hubMemberGet"><code><span class="http-method">get</span> /member/{hub_id}/{user_id}</code></a></li>
   <li><a href="#hubMuteCheck"><code><span class="http-method">get</span> /hub/{hub_id}/is_muted/{user_id}</code></a></li>
   <li><a href="#hubMuteUser"><code><span class="http-method">post</span> /member/{hub_id}/{user_id}/mute</code></a></li>
@@ -962,6 +964,38 @@
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="hubJoin"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /hub/join/{hub_id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubJoin</span>)</div>
+    <div class="method-notes">Join a hub, must do this to perform any operations on said hub besids checking if an account is banned or muted.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hub_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hub join success.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource does not exist or user does not have permission to access it
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="hubKickUser"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -1009,6 +1043,38 @@
     <h4 class="field-label">401</h4>
     Authentication information is missing or invalid
         <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="hubLeave"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /hub/leave/{hub_id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">hubLeave</span>)</div>
+    <div class="method-notes">Leave a hub, must be in the hub to do this.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hub_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; UUID of a hub </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hub leave success.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource does not exist or user does not have permission to access it
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="hubMemberGet"></a>
