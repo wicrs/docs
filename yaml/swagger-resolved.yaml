@@ -227,6 +227,49 @@ paths:
             access it
         "500":
           description: Unable to create the new hub.
+  /hub/join/{hub_id}:
+    post:
+      tags:
+      - hub
+      description: Join a hub, must do this to perform any operations on said hub
+        besids checking if an account is banned or muted.
+      operationId: hubJoin
+      parameters:
+      - name: hub_id
+        in: path
+        description: UUID of a hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Hub join success.
+        "404":
+          description: Resource does not exist or user does not have permission to
+            access it
+  /hub/leave/{hub_id}:
+    post:
+      tags:
+      - hub
+      description: Leave a hub, must be in the hub to do this.
+      operationId: hubLeave
+      parameters:
+      - name: hub_id
+        in: path
+        description: UUID of a hub
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Hub leave success.
+        "404":
+          description: Resource does not exist or user does not have permission to
+            access it
   /hub/{hub_id}:
     get:
       tags:
