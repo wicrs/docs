@@ -480,6 +480,32 @@ paths:
           description: Unable to create the new hub.
       tags:
         - hub
+  '/hub/join/{hub_id}':
+    post:
+      description: Join a hub, must do this to perform any operations on said hub besids checking if an account is banned or muted.
+      operationId: hubJoin
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+      responses:
+        200:
+          description: Hub join success.
+        404:
+          $ref: '#/components/responses/not_found'
+      tags:
+        - hub
+  '/hub/leave/{hub_id}':
+    post:
+      description: Leave a hub, must be in the hub to do this.
+      operationId: hubLeave
+      parameters:
+        - $ref: '#/components/parameters/hub_id'
+      responses:
+        200:
+          description: Hub leave success.
+        404:
+          $ref: '#/components/responses/not_found'
+      tags:
+        - hub
   '/hub/{hub_id}':
     get:
       description: Get a hub
